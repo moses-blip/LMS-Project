@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './DashboardLayout.module.css';
 import {
   FaGraduationCap,
@@ -13,16 +13,28 @@ import {
   FaEnvelope,
   FaCog,
   FaBell,
+  FaUserShield,
+  FaChartBar,
 } from 'react-icons/fa';
 import MiniCalendar from './MiniCalendar';
-import Footer from '../components/Footer'; // ✅ Footer import added
+import Footer from '../components/Footer';
 
 const DashboardLayout = ({ children, userRole = 'student' }) => {
+  const navigate = useNavigate();
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [checkedTasks, setCheckedTasks] = useState({});
 
   const toggleSubmenu = () => {
     setSubmenuOpen(!submenuOpen);
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    // Clear auth data
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    // Navigate to login page
+    navigate('/signin');
   };
 
   const handleCheckboxChange = (task) => {
@@ -32,21 +44,7 @@ const DashboardLayout = ({ children, userRole = 'student' }) => {
     }));
   };
 
-  const todoItems =
-    userRole === 'lecturer'
-      ? [
-          { task: 'Grade Assignments', time: '10:00 AM' },
-          { task: 'Upload Lecture Notes' },
-          { task: 'Review Student Questions', time: '3:00 PM' },
-        ]
-      : [
-          { task: 'Complete Quiz 1', time: '08:00 AM' },
-          { task: 'Read Chapter 4' },
-          { task: 'Join Virtual Class' },
-          { task: 'Submit Assignment', time: '02:40 PM' },
-          { task: 'Group Discussion Prep', time: '04:50 PM' },
-        ];
-
+  // Sidebar menu items by role
   const menuItems = [
     { to: '/', icon: <FaHome />, label: 'Home', roles: ['student', 'lecturer', 'admin'] },
     { to: '/virtual-classroom', icon: <FaVideo />, label: 'Virtual Classroom', roles: ['student', 'lecturer'] },
@@ -61,7 +59,100 @@ const DashboardLayout = ({ children, userRole = 'student' }) => {
     { to: '/attendance', icon: <FaCalendarAlt />, label: 'Attendance', roles: ['student', 'lecturer'] },
     { to: '/groups', icon: <FaUsers />, label: 'My Groups', roles: ['student', 'lecturer'] },
     { to: '/messages', icon: <FaEnvelope />, label: 'Messages', roles: ['student', 'lecturer', 'admin'] },
+    // Admin-only links
+    { to: '/manage-users', icon: <FaUserShield />, label: 'Manage Users', roles: ['admin'] },
+    { to: '/manage-courses', icon: <FaBook />, label: 'Manage Courses', roles: ['admin'] },
+    { to: '/analytics', icon: <FaChartBar />, label: 'Analytics', roles: ['admin'] },
+    { to: '/monitor', icon: <FaChartBar />, label: 'Monitor', roles: ['admin'] },
   ];
+
+  // Right sidebar widgets by role
+  const renderRightSidebar = () => {
+    if (userRole === 'admin') {
+      return (
+        <div className={styles.rightSidebarSmall}>
+          <div className={styles.profileSectionSmall}>
+            <div className={styles.profilePicWrapperSmall}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#888" viewBox="0 0 24 24" width="50" height="50">
+                <path d="M12 12c2.7 0 4.5-2.2 4.5-4.5S14.7 3 12 3 7.5 5.2 7.5 7.5 9.3 12 12 12zm0 1.5c-3 0-9 1.5-9 4.5V21h18v-3c0-3-6-4.5-9-4.5z" />
+              </svg>
+            </div>
+            <h3 className={styles.profileNameSmall}>Admin</h3>
+            <p className={styles.profileRoleSmall}>Administrator</p>
+          </div>
+          <div className={styles.calendarSectionSmall}>
+            <MiniCalendar highlightToday={true} />
+          </div>
+          <div className={styles.separatorLineSmall}></div>
+          <div className={styles.todoListSmall}>
+            <h4>Admin Quick Links</h4>
+            <ul>
+              <li><Link to="/manage-users">Manage Users</Link></li>
+              <li><Link to="/manage-courses">Manage Courses</Link></li>
+              <li><Link to="/analytics">Analytics</Link></li>
+              <li><Link to="/monitor">Monitor</Link></li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
+    // Lecturer rightbar
+    if (userRole === 'lecturer') {
+      return (
+        <div className={styles.rightSidebarSmall}>
+          <div className={styles.profileSectionSmall}>
+            <div className={styles.profilePicWrapperSmall}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#888" viewBox="0 0 24 24" width="50" height="50">
+                <path d="M12 12c2.7 0 4.5-2.2 4.5-4.5S14.7 3 12 3 7.5 5.2 7.5 7.5 9.3 12 12 12zm0 1.5c-3 0-9 1.5-9 4.5V21h18v-3c0-3-6-4.5-9-4.5z" />
+              </svg>
+            </div>
+            <h3 className={styles.profileNameSmall}>Lecturer</h3>
+            <p className={styles.profileRoleSmall}>Lecturer</p>
+          </div>
+          <div className={styles.calendarSectionSmall}>
+            <MiniCalendar highlightToday={true} />
+          </div>
+          <div className={styles.separatorLineSmall}></div>
+          <div className={styles.todoListSmall}>
+            <h4>To Do List</h4>
+            <ul>
+              <li>Grade Assignments</li>
+              <li>Upload Lecture Notes</li>
+              <li>Review Student Questions</li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
+    // Student rightbar
+    return (
+      <div className={styles.rightSidebarSmall}>
+        <div className={styles.profileSectionSmall}>
+          <div className={styles.profilePicWrapperSmall}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#888" viewBox="0 0 24 24" width="50" height="50">
+              <path d="M12 12c2.7 0 4.5-2.2 4.5-4.5S14.7 3 12 3 7.5 5.2 7.5 7.5 9.3 12 12 12zm0 1.5c-3 0-9 1.5-9 4.5V21h18v-3c0-3-6-4.5-9-4.5z" />
+            </svg>
+          </div>
+          <h3 className={styles.profileNameSmall}>Student</h3>
+          <p className={styles.profileRoleSmall}>Student</p>
+        </div>
+        <div className={styles.calendarSectionSmall}>
+          <MiniCalendar highlightToday={true} />
+        </div>
+        <div className={styles.separatorLineSmall}></div>
+        <div className={styles.todoListSmall}>
+          <h4>To Do List</h4>
+          <ul>
+            <li>Complete Quiz 1</li>
+            <li>Read Chapter 4</li>
+            <li>Join Virtual Class</li>
+            <li>Submit Assignment</li>
+            <li>Group Discussion Prep</li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className={styles.container}>
@@ -98,7 +189,7 @@ const DashboardLayout = ({ children, userRole = 'student' }) => {
                   <Link to="/account/general-info" className={styles.submenuItemSmall}>General Information</Link>
                 </li>
                 <li>
-                  <Link to="/logout" className={styles.submenuItemSmall}>Log Out</Link>
+                  <button onClick={handleLogout} className={styles.submenuItemSmall}>Log Out</button>
                 </li>
               </ul>
             )}
@@ -120,58 +211,11 @@ const DashboardLayout = ({ children, userRole = 'student' }) => {
 
         <div className={styles.dashboardContent}>
           <div className={styles.outletContent}>{children}</div>
-
-          <aside className={styles.rightSidebarSmall}>
-            <div className={styles.profileSectionSmall}>
-              <div className={styles.profilePicWrapperSmall}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="#888"
-                  viewBox="0 0 24 24"
-                  width="50"
-                  height="50"
-                >
-                  <path d="M12 12c2.7 0 4.5-2.2 4.5-4.5S14.7 3 12 3 7.5 5.2 7.5 7.5 9.3 12 12 12zm0 1.5c-3 0-9 1.5-9 4.5V21h18v-3c0-3-6-4.5-9-4.5z" />
-                </svg>
-              </div>
-              <h3 className={styles.profileNameSmall}>Travis Kaino</h3>
-              <p className={styles.profileRoleSmall}>
-                {userRole === 'trainer' ? 'Trainer' : userRole.charAt(0).toUpperCase() + userRole.slice(1)}
-              </p>
-            </div>
-
-            <div className={styles.calendarSectionSmall}>
-              <MiniCalendar highlightToday={true} />
-            </div>
-
-            <div className={styles.separatorLineSmall}></div>
-
-            <div className={styles.todoListSmall}>
-              <h4>To Do List</h4>
-              <ul>
-                {todoItems.map((item, idx) => (
-                  <li key={idx} className={styles.todoItemSmall}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={checkedTasks[item.task] || false}
-                        onChange={() => handleCheckboxChange(item.task)}
-                        className={styles.todoCheckboxSmall}
-                      />
-                      <span className={styles.todoTaskSmall}>{item.task}</span>
-                      {item.time && (
-                        <span className={styles.timeTagSmall}>{item.time}</span>
-                      )}
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </aside>
+          {renderRightSidebar()}
         </div>
       </main>
 
-      <Footer /> {/* ✅ Only this line added */}
+      <Footer />
     </div>
   );
 };
