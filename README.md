@@ -200,4 +200,208 @@ cd LMS-Project
 
 ## License
 
-This project is licensed under the MIT License. 
+This project is licensed under the MIT License.
+
+## API Documentation
+
+### Authentication Endpoints
+
+#### Login
+```http
+POST /api/auth/login
+```
+Request body:
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+Response:
+```json
+{
+  "token": "jwt_token_here",
+  "user": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "user@example.com",
+    "role": "student"
+  }
+}
+```
+
+#### Register
+```http
+POST /api/auth/register
+```
+Request body:
+```json
+{
+  "name": "John Doe",
+  "email": "user@example.com",
+  "password": "password123",
+  "role": "student"
+}
+```
+
+### Course Endpoints
+
+#### Get All Courses
+```http
+GET /api/courses
+```
+Response:
+```json
+[
+  {
+    "id": 1,
+    "title": "Introduction to Programming",
+    "description": "Learn the basics of programming",
+    "instructor": "Dr. Smith",
+    "enrollment_count": 45
+  }
+]
+```
+
+#### Get Course Details
+```http
+GET /api/courses/:id
+```
+Response:
+```json
+{
+  "id": 1,
+  "title": "Introduction to Programming",
+  "description": "Learn the basics of programming",
+  "instructor": "Dr. Smith",
+  "modules": [
+    {
+      "id": 1,
+      "title": "Module 1",
+      "content": "Introduction to variables"
+    }
+  ]
+}
+```
+
+### Assignment Endpoints
+
+#### Get Assignments
+```http
+GET /api/assignments
+```
+Response:
+```json
+[
+  {
+    "id": 1,
+    "title": "Programming Assignment 1",
+    "description": "Create a simple calculator",
+    "due_date": "2024-03-01",
+    "course_id": 1
+  }
+]
+```
+
+#### Submit Assignment
+```http
+POST /api/assignments/:id/submit
+```
+Request body:
+```json
+{
+  "submission": "Your assignment content here",
+  "attachments": ["file1.pdf", "file2.zip"]
+}
+```
+
+### User Management Endpoints
+
+#### Get User Profile
+```http
+GET /api/users/profile
+```
+Response:
+```json
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "user@example.com",
+  "role": "student",
+  "enrolled_courses": [
+    {
+      "id": 1,
+      "title": "Introduction to Programming"
+    }
+  ]
+}
+```
+
+#### Update User Profile
+```http
+PUT /api/users/profile
+```
+Request body:
+```json
+{
+  "name": "John Doe",
+  "email": "newemail@example.com"
+}
+```
+
+### Error Handling
+
+All API endpoints follow a consistent error response format:
+
+```json
+{
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Human readable error message",
+    "details": {
+      "field": "Additional error details if applicable"
+    }
+  }
+}
+```
+
+Common error codes:
+- `AUTH_ERROR`: Authentication related errors
+- `VALIDATION_ERROR`: Input validation errors
+- `NOT_FOUND`: Resource not found
+- `FORBIDDEN`: Insufficient permissions
+- `SERVER_ERROR`: Internal server errors
+
+### Authentication
+
+Most endpoints require authentication using JWT tokens. Include the token in the Authorization header:
+
+```http
+Authorization: Bearer your_jwt_token_here
+```
+
+### Rate Limiting
+
+API endpoints are rate-limited to prevent abuse:
+- 100 requests per minute for authenticated users
+- 20 requests per minute for unauthenticated users
+
+### Pagination
+
+List endpoints support pagination using query parameters:
+```http
+GET /api/courses?page=1&limit=10
+```
+
+Response includes pagination metadata:
+```json
+{
+  "data": [...],
+  "pagination": {
+    "current_page": 1,
+    "total_pages": 5,
+    "total_items": 50,
+    "items_per_page": 10
+  }
+}
+``` 

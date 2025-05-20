@@ -25,7 +25,7 @@ const Navbar = () => {
         <span className={styles.dot}>·</span>
         <Link to="/signin">Sign In</Link>
         <span className={styles.dot}>·</span>
-        <Link to="/signup">Sign Up</Link>
+        <Link to="/register">Sign Up</Link>
         
 
       </div>

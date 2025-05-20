@@ -3,11 +3,13 @@
   flex-direction: row;
   width: 100%;
   max-width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
   font-family: 'montserrat', sans-serif;
   background-color: #f5f7fb;
   color: #333;
+  position: relative;
+  padding-bottom: 60px; /* Add space for footer */
 }
 
 /* Left Sidebar */
@@ -113,6 +115,7 @@
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
+  height: 100vh;
 }
 
 /* Top Bar */
@@ -152,6 +155,7 @@
   width: 100%;
   overflow: hidden;
   min-width: 0;
+  height: calc(100vh - 60px); /* Subtract topbar height */
 }
 
 .outletContent {
@@ -159,6 +163,7 @@
   min-width: 0;
   overflow-y: auto;
   padding: 2rem;
+  height: 100%;
 }
 
 /* Right Sidebar */
@@ -262,9 +267,4 @@
   .todoListSmall {
     flex: 1 1 48%;
   }
-}
-.outletContent {
-  flex: 1 1 0;
-  overflow-y: auto;
-  min-width: 0;
 }

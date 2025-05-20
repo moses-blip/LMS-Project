@@ -19,7 +19,7 @@ app.use('/api/assignments', require('./routes/assignments'));
 app.use('/api/submissions', require('./routes/submissions'));
 app.use('/api/grades', require('./routes/grades'));
 app.use('/api/materials', require('./routes/materials'));
-app.use('/api/virtual-classrooms', require('./routes/virtualClassrooms'));
+app.use('/api/virtual-classrooms', require('./routes/virtual-classrooms'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {

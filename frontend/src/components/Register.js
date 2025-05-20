@@ -1,108 +1,162 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 
 function Register() {
-  const [position, setPosition] = useState('student');  // track selected position
-  const [selectedUnits, setSelectedUnits] = useState([]);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    role: 'student'
+  });
+  const [error, setError] = useState('');
 
-  // Sample courses and units for dropdown (replace with real data if available)
-  const courses = ['Computer Science', 'Business', 'Engineering'];
-  const units = [
-    'Mathematics',
-    'Programming 101',
-    'Data Structures',
-    'Operating Systems',
-    'Networking',
-  ];
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
-  // Handle multi-select units
-  const toggleUnit = (unit) => {
-    setSelectedUnits(prev =>
-      prev.includes(unit) ? prev.filter(u => u !== unit) : [...prev, unit]
-    );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Store token and user data
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        
+        // Redirect based on role
+        switch(data.user.role) {
+          case 'admin':
+            navigate('/dashboard/admin');
+            break;
+          case 'lecturer':
+            navigate('/dashboard/lecturer');
+            break;
+          case 'student':
+            navigate('/dashboard/student');
+            break;
+          default:
+            navigate('/dashboard');
+        }
+      } else {
+        setError(data.message || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setError('Registration failed. Please try again.');
+    }
   };
 
   return (
     <div className={styles.registerPage}>
-      
-      {/* Main Register Section */}
       <div className={styles.registerContainer}>
-        {/* Left Side */}
         <div className={styles.registerLeft}>
           <h1>Hello,</h1>
           <p>Welcome to the registration page of our E-LMS. Please fill out the form to access full features.</p>
           <p>If you already have an account, click below to login.</p>
-          <Link to="/login"><button className={styles.loginBtn}>LOGIN</button></Link>
+          <Link to="/signin"><button className={styles.loginBtn}>LOGIN</button></Link>
         </div>
 
-        {/* Right Side - Form */}
         <div className={styles.registerRight}>
           <h2>SIGN UP</h2>
-          <form>
+          {error && <div className={styles.error}>{error}</div>}
+          <form onSubmit={handleSubmit}>
             <div className={styles.inputRow}>
-              <input type="text" placeholder="First Name" />
-              <input type="text" placeholder="Last Name" />
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="First Name"
+                required
+              />
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Last Name"
+                required
+              />
             </div>
-            <input type="email" placeholder="Email Address" />
-
-            {/* Registration Number below Email */}
-            <input type="text" placeholder="Registration Number" />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email Address"
+              required
+            />
 
             <div className={styles.positionGroup}>
               <label>Position:</label>
               <label>
                 <input
                   type="radio"
-                  name="position"
+                  name="role"
                   value="student"
-                  checked={position === 'student'}
-                  onChange={() => setPosition('student')}
+                  checked={formData.role === 'student'}
+                  onChange={handleChange}
                 />
                 Student
               </label>
               <label>
                 <input
                   type="radio"
-                  name="position"
-                  value="trainer"
-                  checked={position === 'trainer'}
-                  onChange={() => setPosition('trainer')}
+                  name="role"
+                  value="lecturer"
+                  checked={formData.role === 'lecturer'}
+                  onChange={handleChange}
                 />
-                Trainer
+                Lecturer
               </label>
             </div>
 
-            {/* Conditionally show these fields if position is trainer */}
-            {position === 'trainer' && (
-              <>
-                <label>Choose Course:</label>
-                <select>
-                  <option value="">Select a course</option>
-                  {courses.map(course => (
-                    <option key={course} value={course}>{course}</option>
-                  ))}
-                </select>
-
-                <label>Units (select multiple):</label>
-                <div className={styles.unitsMultiSelect}>
-                  {units.map(unit => (
-                    <label key={unit} style={{ display: 'block' }}>
-                      <input
-                        type="checkbox"
-                        value={unit}
-                        checked={selectedUnits.includes(unit)}
-                        onChange={() => toggleUnit(unit)}
-                      />
-                      {unit}
-                    </label>
-                  ))}
-                </div>
-              </>
-            )}
-
-            <input type="password" placeholder="Enter Password" />
-            <input type="password" placeholder="Retype Password" />
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter Password"
+              required
+            />
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Retype Password"
+              required
+            />
             <button type="submit" className={styles.registerBtn}>REGISTER</button>
           </form>
         </div>
