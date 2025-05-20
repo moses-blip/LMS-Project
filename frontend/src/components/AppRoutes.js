@@ -1,8 +1,10 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
 
 import Login from './Login';
 import Register from './Register';
+import Logout from './Logout';
 import DashboardLayout from './DashboardLayout';
 import Dashboard from './Dashboard';
 import StudentPanel from './StudentPanel';
@@ -43,7 +45,7 @@ import MainLayout from './MainLayout';
 function AppRoutes() {
   return (
     <Routes>
-      {/* Auth & General (with Global Nav via MainLayout) */}
+      {/* Public Routes */}
       <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
       <Route path="/homepage" element={<MainLayout><HomePage /></MainLayout>} />
       <Route path="/about" element={<MainLayout><AboutUs /></MainLayout>} />
@@ -51,122 +53,172 @@ function AppRoutes() {
       <Route path="/contact" element={<MainLayout><ContactInfo /></MainLayout>} />
       <Route path="/signin" element={<MainLayout><Login /></MainLayout>} />
       <Route path="/register" element={<MainLayout><Register /></MainLayout>} />
+      <Route path="/logout" element={<Logout />} />
       <Route path="/enroll" element={<MainLayout><EnrollCourse /></MainLayout>} />
-      {/* Non-global-nav pages */}
-  
-      <Route path="/footer" element={<Footer />} />
-      <Route path="/account/general-info" element={<GeneralInfoPage />} />
 
-      {/* Dashboard & Panels */}
-      <Route path="/dashboardLayout" element={<DashboardLayout />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/dashboard/student" element={<StudentPanel />} />
-      <Route path="/dashboard/lecturer" element={<LecturerPanel />} />
-      <Route path="/dashboard/admin" element={<AdminPanel />} />
+      {/* Protected Routes */}
+      <Route path="/dashboard" element={
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      } />
+      <Route path="/dashboard/student" element={
+        <ProtectedRoute>
+          <StudentPanel />
+        </ProtectedRoute>
+      } />
+      <Route path="/dashboard/lecturer" element={
+        <ProtectedRoute>
+          <LecturerPanel />
+        </ProtectedRoute>
+      } />
+      <Route path="/dashboard/admin" element={
+        <ProtectedRoute>
+          <AdminPanel />
+        </ProtectedRoute>
+      } />
 
-      {/* Student Views */}
+      {/* Protected Student Routes */}
       <Route path="/messages" element={
-        <DashboardLayout>
-          <MessagesPage />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout>
+            <MessagesPage />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/assignments" element={
-        <DashboardLayout userRole="student">
-          <StudentAssignmentView />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="student">
+            <StudentAssignmentView />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/grades" element={
-        <DashboardLayout userRole="student">
-          <ViewGradesPage />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="student">
+            <ViewGradesPage />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/student/materials" element={
-        <DashboardLayout userRole="student">
-          <StudentMaterialsView />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="student">
+            <StudentMaterialsView />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/profilepage" element={
-        <DashboardLayout userRole="student">
-          <ProfilePage />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="student">
+            <ProfilePage />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/profile-tabs" element={
-        <DashboardLayout userRole="student">
-          <ProfilePage />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="student">
+            <ProfilePage />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/virtual-classroom" element={
-        <DashboardLayout userRole="student">
-          <VirtualClassroom userRole="student" />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="student">
+            <VirtualClassroom userRole="student" />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
 
-      {/* Lecturer Views */}
+      {/* Protected Lecturer Routes */}
       <Route path="/lecturer/assignments" element={
-        <DashboardLayout userRole="lecturer">
-          <LecturerAssignmentPanel />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="lecturer">
+            <LecturerAssignmentPanel />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/lecturer/learners-progress" element={
-        <DashboardLayout userRole="lecturer">
-          <LearnersProgress />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="lecturer">
+            <LearnersProgress />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/lecturer/upload-materials" element={
-        <DashboardLayout userRole="lecturer">
-          <LecturerMaterialsUpload />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="lecturer">
+            <LecturerMaterialsUpload />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/lecturer/student-submissions" element={
-        <DashboardLayout userRole="lecturer">
-          <StudentSubmissions />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="lecturer">
+            <StudentSubmissions />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/lecturer/grade-quizzes" element={
-        <DashboardLayout userRole="lecturer">
-          <GradeAssignments />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="lecturer">
+            <GradeAssignments />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/lecturer/create-class" element={
-        <DashboardLayout userRole="lecturer">
-          <CreateClass />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="lecturer">
+            <CreateClass />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
 
-      {/* Admin Views */}
+      {/* Protected Admin Routes */}
       <Route path="/manage-users" element={
-        <DashboardLayout userRole="admin">
-          <ManageUsers />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="admin">
+            <ManageUsers />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/add-user" element={
-        <DashboardLayout userRole="admin">
-          <AddUser />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="admin">
+            <AddUser />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/course-enrollment" element={
-        <DashboardLayout userRole="admin">
-          <CourseEnrollment />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="admin">
+            <CourseEnrollment />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/manage-courses" element={
-        <DashboardLayout userRole="admin">
-          <ManageCourses />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="admin">
+            <ManageCourses />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/monitor" element={
-        <DashboardLayout userRole="admin">
-          <MonitorDashboard />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="admin">
+            <MonitorDashboard />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
       <Route path="/analytics" element={
-        <DashboardLayout userRole="admin">
-          <StudentAnalytics />
-        </DashboardLayout>
+        <ProtectedRoute>
+          <DashboardLayout userRole="admin">
+            <StudentAnalytics />
+          </DashboardLayout>
+        </ProtectedRoute>
       } />
 
       {/* Fallback */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/signin" replace />} />
     </Routes>
   );
 }

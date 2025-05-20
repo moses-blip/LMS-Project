@@ -11,20 +11,44 @@ import StudentPanel from "../components/StudentPanel";       // ✅ Correct case
 const Dashboard = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TEMPORARY: Set default role for development preview
-    setRole("lecturer");
-  }, []);
+    // Check if user is authenticated
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (!token || !user) {
+      // If not authenticated, redirect to login
+      navigate('/signin');
+      return;
+    }
+
+    // Set role from user data
+    setRole(user.role);
+    setLoading(false);
+  }, [navigate]);
   
   const renderDashboardPanel = () => {
-    if (role === "admin") return <AdminPanel />;
-    if (role === "lecturer") return <LecturerPanel />;
-    if (role === "student") return <StudentPanel />;
-    return <p style={{ padding: "2rem" }}>Loading...</p>;
+    if (loading) {
+      return <p style={{ padding: "2rem" }}>Loading...</p>;
+    }
+
+    switch (role) {
+      case "admin":
+        return <AdminPanel />;
+      case "lecturer":
+        return <LecturerPanel />;
+      case "student":
+        return <StudentPanel />;
+      default:
+        // If role is not recognized, redirect to login
+        navigate('/signin');
+        return null;
+    }
   };
 
-  return <DashboardLayout>{renderDashboardPanel()}</DashboardLayout>;
+  return <DashboardLayout userRole={role}>{renderDashboardPanel()}</DashboardLayout>;
 };
 
 export default Dashboard;

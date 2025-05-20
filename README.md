@@ -83,7 +83,7 @@ cd LMS-Project
 
 5. **Start Backend Server**
    ```bash
-   npm run dev
+   npm start
    ```
    The server should start on http://localhost:5000
 
@@ -109,6 +109,18 @@ cd LMS-Project
 - Email: admin@example.com
 - Password: admin123
 
+## Authentication & Protected Routes
+
+- **Authentication:**
+  - Users must log in to access any dashboard or protected route.
+  - JWT tokens and user info are stored in `localStorage` after login.
+- **ProtectedRoute Component:**
+  - All dashboard and dashboard-related routes are wrapped in a `ProtectedRoute` component.
+  - If a user is not authenticated, they are redirected to the login page (`/signin`).
+- **Role-based Dashboard:**
+  - The dashboard automatically displays the correct panel (Admin, Lecturer, or Student) based on the logged-in user's role.
+  - The role is determined from the user object stored in `localStorage` after login.
+
 ## Testing the Setup
 
 1. **Verify Backend**
@@ -120,6 +132,8 @@ cd LMS-Project
    - Open http://localhost:3000 in your browser
    - You should see the login page
    - Try logging in with the admin credentials
+   - After login, you should be redirected to the dashboard for your role
+   - If you log out, you will be redirected to the login page and cannot access dashboard routes
 
 ## Common Issues and Solutions
 
@@ -148,12 +162,12 @@ cd LMS-Project
    - React components are in `frontend/src/components`
    - API calls should be made to `http://localhost:5000/api`
    - Store JWT token in localStorage
+   - Use the `ProtectedRoute` component to protect any new routes that require authentication
 
 ## Available Scripts
 
 ### Backend
-- `npm run dev` - Start development server
-- `npm start` - Start production server
+- `npm start` - Start backend server
 - `npm run init-db` - Initialize database
 
 ### Frontend
