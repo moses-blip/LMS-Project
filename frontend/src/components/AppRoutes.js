@@ -50,7 +50,7 @@ function AppRoutes() {
       <Route path="/courses" element={<MainLayout><Courses /></MainLayout>} />
       <Route path="/contact" element={<MainLayout><ContactInfo /></MainLayout>} />
       <Route path="/signin" element={<MainLayout><Login /></MainLayout>} />
-      <Route path="/signup" element={<MainLayout><Register /></MainLayout>} />
+      <Route path="/register" element={<MainLayout><Register /></MainLayout>} />
       <Route path="/enroll" element={<MainLayout><EnrollCourse /></MainLayout>} />
       {/* Non-global-nav pages */}
   
