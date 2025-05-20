@@ -1,0 +1,147 @@
+/* Container */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f9fafc;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Title */
+.title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Filter controls */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.select,
+.searchInput {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-width: 200px;
+  transition: border-color 0.2s;
+}
+
+.select:focus,
+.searchInput:focus {
+  border-color: #0077ff;
+  outline: none;
+}
+
+/* Materials List */
+.materialsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.materialItem {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+}
+
+.materialItem:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.materialHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.typeTag {
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.materialTitle {
+  font-size: 1.25rem;
+  color: #222;
+}
+
+.materialDesc {
+  margin-top: 0.3rem;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.materialDate {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* PDF and Link Viewers */
+.inlineViewer {
+  margin-top: 1rem;
+  width: 100%;
+  height: 480px;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px #ddd;
+}
+
+/* Video */
+.videoWrapper {
+  margin-top: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* No materials message */
+.noMaterials {
+  text-align: center;
+  color: #999;
+  font-size: 1rem;
+  margin-top: 2rem;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pageButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pageButton:hover {
+  background: #f0f0f0;
+}
+
+.activePage {
+  background-color: #0077ff;
+  color: #fff;
+  border-color: #0077ff;
+}

@@ -1,0 +1,188 @@
+.container {
+  padding: 1.5rem;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.greetingSection {
+  margin-bottom: 2rem;
+}
+
+.greetingSection h2 {
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.greetingSection p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.statsGrid {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.statCard {
+  flex: 1;
+  min-width: 50px;
+  background-color: #f9f9f9;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  position: relative;
+}
+
+.statIcon {
+  font-size: 1.8rem;
+  color: #4a90e2;
+  margin-bottom: 0.5rem;
+}
+
+.statCard h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.statCard p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #4a90e2;
+}
+
+/* Chart container adjustments */
+.chartContainer {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+  max-width: 500px; /* reduced width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chartTitle {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #333;
+  text-align: Left;
+}
+
+.performanceSection {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.progressGrid {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.circleProgress {
+  text-align: center;
+  flex: 1;
+  min-width: 180px;
+}
+
+/* Increased circular chart size */
+.circularChart {
+  display: block;
+  margin: auto;
+  max-width: 120px;
+  max-height: 120px;
+  transform: rotate(-90deg);
+}
+
+.circleBg {
+  fill: none;
+  stroke: #ffc233;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke: #4a90e2;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  animation: progress 1s ease-out forwards;
+}
+
+.percentage {
+  fill: #4a90e2;
+  font-size: 0.5em;
+  text-anchor: middle;
+}
+
+@keyframes progress {
+  from {
+    stroke-dasharray: 0 100;
+  }
+}
+
+.featuresSection {
+  margin-top: 2rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.featureCard {
+  background-color: #f1f6fb;
+  color: #333;
+  text-decoration: none;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.featureCard:hover {
+  background-color: #e0efff;
+  color: #1a73e8;
+}
+.featureCard {
+  padding: 12px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.featureCard:hover {
+  background-color: #e0e0e0;
+}
+
+.active {
+  background-color: #0091f8;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 145, 248, 0.4);
+}

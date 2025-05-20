@@ -1,0 +1,293 @@
+.virtualClassroom {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 30px 24px;
+  background: #f9fafb;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1f2937;
+  transition: background-color 0.3s ease;
+}
+
+.virtualClassroom:hover {
+  background-color: #f0f4f8;
+}
+
+.virtualClassroom h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.introText {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+/* Search */
+.searchWrapper {
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1.8px solid #d1d5db;
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.searchInput:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 6px rgba(99, 102, 241, 0.6);
+}
+
+/* Class Card Container */
+.classContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Class Card */
+.classCard {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(31, 41, 55, 0.08);
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 32px;
+  transition: box-shadow 0.3s ease;
+}
+
+.classCard:hover {
+  box-shadow: 0 14px 40px rgba(31, 41, 55, 0.12);
+}
+
+/* Class Info */
+.classInfo {
+  flex: 2;
+}
+
+.classInfo h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #1f2937;
+}
+
+.classInfo p {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 14px;
+}
+
+.joinButton,
+.recordingButton {
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(99, 102, 241, 0.4);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.joinButton {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.joinButton:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  box-shadow: 0 14px 32px rgba(124, 58, 237, 0.5);
+}
+
+.recordingButton {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.recordingButton:hover {
+  background: linear-gradient(135deg, #047857, #065f46);
+  box-shadow: 0 14px 32px rgba(5, 150, 105, 0.5);
+}
+
+/* Participants */
+.participants {
+  flex: 1;
+  border-left: 1.5px solid #e5e7eb;
+  padding-left: 26px;
+  display: flex;
+  flex-direction: column;
+}
+
+.participants h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.participantCount {
+  background: #6366f1;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+/* List */
+.participants ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.participantItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+/* Online/Offline badge */
+.statusBadge {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.online {
+  background-color: #10b981;
+  box-shadow: 0 0 5px #10b981aa;
+}
+
+.offline {
+  background-color: #9ca3af;
+}
+
+/* Name + Duration */
+.participantName {
+  flex: 1;
+}
+
+.participantDuration {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.noParticipants {
+  color: #9ca3af;
+  font-style: italic;
+  padding: 8px 0;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .classCard {
+    flex-direction: column;
+  }
+
+  .participants {
+    border-left: none;
+    border-top: 1.5px solid #e5e7eb;
+    padding-left: 0;
+    padding-top: 18px;
+    margin-top: 20px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .joinButton,
+.recordingButton {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Join Button Gradient */
+.joinButton {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.joinButton:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.4);
+}
+
+/* Recording Button Gradient */
+.recordingButton {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.recordingButton:hover {
+  background: linear-gradient(135deg, #047857, #065f46);
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.4);
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.toggleWrapper {
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+  user-select: none;
+}
+
+.searchInput {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  width: 260px;
+}
+
+}

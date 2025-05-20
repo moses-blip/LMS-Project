@@ -1,0 +1,26 @@
+
+.bottomBar {
+  text-align: center;
+  padding-top: 10px;
+  border-top: Shadow;
+  Font-style: Montserrat Bold;
+  font-size: 14px;
+  color: #828080;
+}
+/* src/components/Footer.module.css */
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  z-index: 1000;
+}
+
+.bottomBar {
+  font-size: 0.9rem;
+  box-shadow: 5px;
+}

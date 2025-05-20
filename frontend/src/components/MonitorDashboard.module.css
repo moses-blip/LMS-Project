@@ -1,0 +1,169 @@
+/* Base container */
+.container {
+  padding: 2rem;
+  background-color: #f5f7fa;
+  font-family: 'Poppins', 'Montserrat', sans-serif;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Page title */
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #222;
+}
+
+/* Grid layout */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* Card for each section */
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Wider card for tables or larger content */
+.cardWide {
+  grid-column: span 2;
+}
+
+/* Section titles */
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* List inside a card */
+.list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.list li:last-child {
+  border-bottom: none;
+}
+
+/* Table for reports */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.table th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+}
+
+.table tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Charts */
+.chartContainer {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+/* Section blocks (for flagged messages, etc.) */
+.section {
+  margin-bottom: 3rem;
+}
+
+/* Loading text */
+.loading {
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #888;
+}
+
+/* Media queries for small screens */
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .cardWide {
+    grid-column: span 1;
+  }
+}
+.kpiContainer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpiCard {
+  flex: 1;
+  padding: 1rem;
+  background: #f7f9fc;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.statusOnline {
+  color: green;
+  font-weight: bold;
+}
+
+.downloadBtn {
+  margin-top: 0.5rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.toggleTheme {
+  background: #343a40;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.light {
+  background-color: white;
+  color: black;
+}
+
+.dark {
+  background-color: #1e1e2f;
+  color: white;
+}

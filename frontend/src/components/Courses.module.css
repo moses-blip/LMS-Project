@@ -1,0 +1,238 @@
+/* src/components/Courses.module.css */
+
+/* Base */
+.coursesPage {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #002147;
+    padding: 1rem 2rem;
+    color: white;
+  }
+  
+  .logo a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .logo span {
+    color: #ffc107;
+  }
+  
+  .navLinks {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 0.8rem;
+  }
+  
+  .navLinks li {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navLinks a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  
+  .navLinks span {
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Hero Section */
+  .hero {
+    position: relative;
+    height: 60vh;
+    background-image: url('../assets/hero-bg.jpg'); /* adjust path if needed */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+  }
+  
+  .heroOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  
+  .heroContent {
+    position: relative;
+    z-index: 2;
+    padding: 1rem 2rem;
+    animation: fadeInUp 1.2s ease-in-out;
+  }
+  
+  .heroContent h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+    animation: slideInDown 1s ease forwards;
+  }
+  
+  .heroContent p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    animation: fadeIn 2s ease forwards;
+  }
+  
+  .searchBar {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    animation: fadeIn 2.5s ease forwards;
+  }
+  
+  .searchBar input {
+    padding: 0.6rem 1rem;
+    width: 300px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+  }
+  
+  .searchBar button {
+    padding: 0.6rem 1.2rem;
+    background-color: #ffc107;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  /* Courses Section */
+  .courses {
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  
+  .courses h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #002147;
+  }
+  
+  .courseGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+  
+  .courseCard {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(20px);
+    opacity: 0;
+    animation: cardFadeIn 0.8s ease forwards;
+    animation-delay: calc(var(--i) * 0.2s);
+    transition: transform 0.3s ease;
+  }
+  
+  .courseCard:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+  
+  .courseCard img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .courseCard h3 {
+    font-size: 1.2rem;
+    margin: 1rem 0 0.5rem;
+    color: #002147;
+  }
+  
+  .courseCard p {
+    font-size: 0.95rem;
+    padding: 0 1rem 1rem;
+    color: #555;
+  }
+  
+  .enrollBtn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .enrollBtn:hover {
+    background-color: #5edeec;
+    color: #002147;
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes cardFadeIn {
+    0% {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  

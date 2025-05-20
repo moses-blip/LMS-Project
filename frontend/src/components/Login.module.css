@@ -1,0 +1,134 @@
+.loginPage {
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    background: linear-gradient(135deg, #b5d9f0, #0d7eef);
+    color: white;
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: transparent;
+  }
+  
+  .logo a {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .logo span {
+    color: #003366;
+  }
+  
+  .navLinks {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    list-style: none;
+  }
+  
+  .navLinks li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .navLinks li span {
+    color: #003366;
+    font-size: 20px;
+    line-height: 0;
+  }
+  
+  /* Main Layout */
+  .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  /* Welcome Section */
+  .welcomeSection {
+    max-width: 400px;
+  }
+  
+  .welcomeSection h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  
+  .welcomeSection p {
+    margin-bottom: 30px;
+    color: #ddd;
+  }
+  
+  .learn-more-btn {
+    font-family: 'Open Sans', sans-serif;
+    padding: 10px 20px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Login Form */
+  .loginForm {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 15px;
+    width: 350px;
+    backdrop-filter: blur(8px);
+  }
+  
+  .loginForm h2 {
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  .loginForm label {
+    display: block;
+    margin-top: 10px;
+    color: #ccc;
+  }
+  
+  .loginForm input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #eeeeee;
+  }
+  
+  .loginForm button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .socialIcons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    color: white;
+  }
+  
+  .socialIcons i {
+    font-size: 20px;
+    cursor: pointer;
+  }
+  

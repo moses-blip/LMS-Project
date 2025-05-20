@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --light-bg: #f9f9f9;
+  --dark-bg: #1e1e1e;
+  --light-text: #1e1e1e;
+  --dark-text: #f9f9f9;
+  --primary: #0056d2;
+  --border: #ddd;
+}
+
+[data-theme='dark'] {
+  --light-bg: #1e1e1e;
+  --light-text: #f9f9f9;
+}
+
+.container {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  padding: 2rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.section {
+  background: white;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+
+.section h3 {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.section p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.linkButton {
+  background: none;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.linkButton:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+}

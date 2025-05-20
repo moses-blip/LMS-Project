@@ -1,0 +1,119 @@
+.aboutus {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* === NAVIGATION === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: #fff;
+}
+
+.logo a {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+}
+
+.logo span {
+  color: #003366;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navLinks li {
+  margin: 0 15px;
+  position: relative;
+}
+
+.navLinks li::before {
+  content: '•';
+  color: #003366;
+  font-weight: bold;
+  position: absolute;
+  left: -15px;
+  top: 0;
+}
+
+.navLinks li a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+/* === HERO SECTION WITH BACKGROUND === */
+.heroSection {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 280px 120px; /* Increased size for better presence */
+  background-image: url('../assets/about-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  text-align: center;
+}
+
+.heroSection::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.heroOverlay {
+  position: relative;
+  z-index: 1;
+}
+
+.heroOverlay h1 {
+  font-size: 60px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* === ABOUT CONTENT SECTION (Clean) === */
+.aboutContent {
+  padding: 60px 120px;
+  background-color: #f9f9f9;
+  color: #222;
+  text-align: center;
+}
+
+.story p {
+  margin-bottom: 20px;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.story p span.highlight {
+  font-weight: bold;
+  color: #003366;
+  background-color: #dbe9f4;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.visionMission h2 {
+  margin-top: 40px;
+  color: #003366;
+  font-size: 24px;
+}
+
+.visionMission p {
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+}

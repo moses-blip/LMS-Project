@@ -1,0 +1,255 @@
+/* LearnersProgress.module.css */
+
+/* General Layout */
+.learnerProgress {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.profileWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.profileImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.studentInfo h2 {
+  font-size: 24px;
+  margin: 0;
+  color: #333;
+}
+
+.studentInfo p {
+  color: #777;
+}
+
+/* Section Styles */
+.section {
+  background: #f9f9f9;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+}
+
+.section h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Attendance Section */
+.attendanceSection {
+  background: #e0f7fa;
+}
+
+.attendanceSection canvas {
+  border-radius: 8px;
+}
+
+/* Submission Section */
+.submissionSection {
+  background: #e0f7fa;
+}
+
+.submissionTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.submissionTable th,
+.submissionTable td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.submissionTable th {
+  background-color: #f1f1f1;
+}
+
+.submissionTable tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Grades Section */
+.gradesSection {
+  background: #e0f7fa;
+}
+
+.gradesList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.gradeItem {
+  background: #ecf0f0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.gradeItem h4 {
+  font-size: 18px;
+  color: #333;
+}
+
+.gradeItem p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profileWrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .gradesList {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Top bar: Title + View Profile button */
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.pageTitle {
+  font-size: 28px;
+  color: #333;
+  margin: 0;
+}
+
+.viewProfileBtn {
+  background-color: #1e90ff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* Summary cards row */
+.summaryCards {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1 1 140px;
+  background: #f0f8ff;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cardIcon {
+  font-size: 28px;
+  color: #1e90ff;
+}
+
+.cardLabel {
+  margin: 0;
+  font-size: 12px;
+  color: #555;
+}
+
+.cardValue {
+  margin: 4px 0 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Main sections (attendance + submissions) */
+.mainSections {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  color: #333;
+  margin: 0 0 12px;
+}
+
+/* Reviews section */
+.reviewsSection {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.reviewsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reviewItem {
+  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+}
+
+.reviewItem:last-child {
+  border-bottom: none;
+}
+
+.reviewDate {
+  font-size: 12px;
+  color: #888;
+  margin-right: 12px;
+}
+
+.reviewCourse {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1e90ff;
+  margin-right: 8px;
+}
+
+.reviewText {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Make tables and charts fit nicely in flex children */
+.attendanceSection,
+.submissionSection {
+  flex: 1 1 300px;
+}
+
+.attendanceSection canvas {
+  max-width: 100%;
+}
+
+.submissionTable {
+  width: 100%;
+  border-collapse: collapse;
+}

@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@400;600&display=swap');
+
+.container {
+  font-family: 'Montserrat', 'Poppins', sans-serif;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.heading {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.row {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.row label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+label {
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+}
+
+label input,
+label select,
+textarea {
+  padding: 0.65rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.uploadArea {
+  border: 2px dashed #007bff;
+  background-color: #f4f9ff;
+  border-radius: 10px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.uploadIcon {
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.browseText {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #007bff;
+  margin-bottom: 0.5rem;
+}
+
+.dropHint {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.rightAlign {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submitBtn {
+  padding: 0.6rem 1.5rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submitBtn:hover {
+  background-color: #0056b3;
+}
+
+.listHeading {
+  margin-top: 2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table th,
+.table td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.viewBtn {
+  padding: 0.4rem 0.8rem;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.viewBtn:hover {
+  background-color: #1e7e34;
+}
+.videoPreview {
+  margin-top: 1rem;
+  max-width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.videoPreview video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.materialCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+.materialInfo {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.materialTitle {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.materialMeta {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.materialDesc {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.deleteMaterialBtn {
+  background: transparent;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.3rem;
+}
+
+.deleteMaterialBtn:hover {
+  color: #a71d2a;
+}

@@ -1,0 +1,58 @@
+/* src/components/Navbar.module.css */
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  font-family: 'Inter', sans-serif;
+  flex-wrap: wrap;
+}
+
+/* LEFT SIDE */
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 60px;
+  margin-right: 10px;
+}
+
+.institution {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #003366;
+}
+
+.institution span {
+  color: #00509e;
+  font-weight: 600;
+}
+
+/* RIGHT SIDE */
+.right {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  flex-wrap: wrap;
+}
+
+.right a {
+  text-decoration: none;
+  color: #003366;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.right a:hover {
+  color: #00509e;
+}
+
+.dot {
+  margin: 0 8px;
+  color: #888;
+}

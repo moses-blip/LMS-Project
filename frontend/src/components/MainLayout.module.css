@@ -1,0 +1,24 @@
+/* src/layouts/MainLayout.module.css */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex-grow: 1;
+  padding: 20px;
+}
+/* src/layouts/MainLayout.module.css */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  padding: 1rem; /* Optional: for spacing */
+}
+

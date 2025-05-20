@@ -1,0 +1,92 @@
+.container {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.title {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tabs button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #f1f1f1;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.tabs .activeTab {
+  background: #0077ff;
+  color: white;
+}
+
+.searchFilter {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.searchFilter input, .searchFilter select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  flex: 1;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table thead {
+  background: #f5f5f5;
+}
+
+.table th, .table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.enrolled {
+  color: green;
+  font-weight: bold;
+}
+
+.pending {
+  color: orange;
+  font-weight: bold;
+}
+
+button {
+  padding: 0.4rem 0.75rem;
+  background: #0077ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.removeBtn {
+  background: #e63946;
+}

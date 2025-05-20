@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './components/AppRoutes';
 
 function App() {
-    useEffect(() => {
-        axios.get('http://localhost:5000/')
-            .then(response => console.log(response.data))
-            .catch(error => console.error(error));
-    }, []);
-
-    return (
-        <div>
-            <h1>Welcome to LMS</h1>
-        </div>
-    );
+  return (
+    <Router>
+      <AppRoutes />
+    </Router>
+  );
 }
 
 export default App;

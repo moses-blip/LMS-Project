@@ -1,0 +1,115 @@
+.container {
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.studentInfo {
+  margin-bottom: 2rem;
+  line-height: 1.8;
+  color: #444;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.table thead {
+  background-color: #f0f0f0;
+}
+
+.table th {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Grade styling */
+.grade {
+  font-weight: bold;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.competent {
+  background-color: #e0f7fa;
+  color: #007c91;
+}
+
+.notYetCompetent {
+  background-color: #fff3cd;
+  color: #b36b00;
+}
+
+.reassess {
+  background-color: #ffe082;
+  color: #8a5c00;
+}
+
+.summary {
+  line-height: 1.8;
+  font-weight: 500;
+  color: #444;
+}
+.grade {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  display: inline-block;
+}
+
+.competent {
+  background-color: #e0f7fa;
+  color: #00796b;
+}
+
+.notYetCompetent {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.reassess {
+  background-color: #ffc233;
+  color: #333;
+}
+.grade {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.competent {
+  background-color: #e0f7fa;
+  color: #006064;
+}
+
+.notYetCompetent {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.reassess {
+  background-color: #ffc233;
+  color: #5d4037;
+}

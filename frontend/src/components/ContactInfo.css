@@ -1,0 +1,165 @@
+/* src/components/ContactInfo.css */
+
+.contact-container {
+  font-family: 'Inter', sans-serif;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.contact-header h1 {
+  font-size: 2.8rem;
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.contact-header p {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.contact-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+}
+
+.contact-details {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.contact-item .icon {
+  color: #003366;
+  margin-right: 15px;
+}
+
+.contact-form {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 14px 12px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.input-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  background: #fff;
+  padding: 0 6px;
+  color: #777;
+  font-size: 0.95rem;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group textarea:focus + label,
+.input-group textarea:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 0.75rem;
+  color: #003366;
+}
+
+.send-btn {
+  background: #003366;
+  color: #fff;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.send-btn:hover {
+  background: #00509e;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-content {
+    flex-direction: column;
+  }
+
+  .contact-header h1 {
+    font-size: 2rem;
+  }
+}
+/* ContactInfo.css */
+
+/* Nav styles */
+.contact-nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 40px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-items {
+  display: flex;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+}
+
+.nav-items a {
+  text-decoration: none;
+  color: #003366;
+  transition: color 0.3s ease;
+}
+
+.nav-items a:hover {
+  color: #00509e;
+}
+
+.nav-items span {
+  color: #ccc;
+}
+
+

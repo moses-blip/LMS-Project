@@ -1,0 +1,105 @@
+/* src/components/CreateClass.module.css */
+.createClassContainer {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.flexRow {
+  display: flex;
+  gap: 1rem;
+}
+
+.meetRow {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.generateBtn {
+  background: #0091f8;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.generateBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.checkboxGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.checkboxGroup svg {
+  margin-right: 0.3rem;
+  color: green;
+}
+
+.submitBtn {
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.submitBtn:hover {
+  background-color: #a0d8e9;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

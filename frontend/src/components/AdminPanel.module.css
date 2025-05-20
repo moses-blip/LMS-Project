@@ -1,0 +1,284 @@
+:root {
+  --navy: #001f3f;
+  --yellow: #f4c542;
+  --lightblue: #5bc0de;
+  --orange: #fd7e14;
+  --blue: #007bff;
+}
+
+.container {
+  padding: 2rem;
+  background-color: #f5f7fa;
+}
+
+/* ===== HEADER ===== */
+.adminHeaderSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.welcome {
+  font-size: 16px;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.vectorBox {
+  flex-shrink: 0;
+}
+
+.vectorImage {
+  max-height: 90px;
+  width: auto;
+  border-radius: 10px;
+}
+
+/* ===== ROW GRID ===== */
+.rowGrid {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+/* ===== STUDENT PROGRESS ===== */
+.progressSection {
+  flex: 1;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+.studentCard {
+  margin-bottom: 1.25rem;
+}
+
+.studentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.studentName {
+  font-weight: 500;
+  color: #333;
+}
+
+.progressBarContainer {
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  height: 10px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+/* ===== BADGE STYLES ===== */
+.percentageBadge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* ===== WORKING HOURS ===== */
+.workingHoursCard {
+  flex: 1;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+.circularProgress {
+  margin: 1rem auto;
+  display: block;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.dotLegend {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 14px;
+  color: #555;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot.blue {
+  background-color: var(--blue);
+}
+
+.dot.yellow {
+  background-color: var(--yellow);
+}
+
+/* ===== ADMIN TOOLS ===== */
+.toolsSection {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 3rem;
+}
+
+.subtitle {
+  margin-bottom: 1rem;
+  font-size: 20px;
+  font-weight: 600;
+  color: #222;
+}
+
+.featureGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.featureCard {
+  flex: 1 1 220px;
+  padding: 1.2rem;
+  background-color: #f0f4f8;
+  text-align: center;
+  border-radius: 10px;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.featureCard:hover {
+  background-color: #e0ebf7;
+  transform: translateY(-2px);
+}
+
+/* ===== SECTION HEADER & BUTTONS ===== */
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.viewButton {
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.viewButton:hover {
+  background-color: #0066cc;
+}
+
+.sectionLine {
+  border: 0;
+  border-top: 1px solid #e0e0e0;
+  margin: 1rem 0;
+}
+
+/* ===== COLORS ===== */
+.navy {
+  background-color: var(--navy);
+}
+
+.yellow {
+  background-color: var(--yellow);
+}
+
+.lightblue {
+  background-color: var(--lightblue);
+}
+
+.orange {
+  background-color: var(--orange);
+}
+
+.blue {
+  background-color: var(--blue);
+}
+.reportsSection {
+  margin-top: 40px;
+}
+
+.reportGrid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.reportCard {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.reportCard h4 {
+  margin-bottom: 8px;
+}
+
+.reportCard p {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #555;
+}
+
+.reportCard button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.reportCard button:hover {
+  background-color: #0056b3;
+}
