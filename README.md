@@ -25,20 +25,14 @@ cd LMS-Project
    - Download MySQL Community Server from [MySQL Downloads](https://dev.mysql.com/downloads/mysql/)
    - During installation:
      - Choose "Developer Default" or "Server only" setup type
-     - Set root password (remember this password)
+     - Set a strong root password
      - Complete the installation
 
 2. **Create Database and User**
    - Open MySQL Command Line Client or MySQL Workbench
    - Log in with your root password
-   - Run the following commands:
-   ```sql
-   CREATE DATABASE IF NOT EXISTS lms_db;
-   DROP USER IF EXISTS 'lms_user'@'localhost';
-   CREATE USER 'lms_user'@'localhost' IDENTIFIED BY 'lms123';
-   GRANT ALL PRIVILEGES ON lms_db.* TO 'lms_user'@'localhost';
-   FLUSH PRIVILEGES;
-   ```
+   - Create a new database and user with appropriate permissions
+   - Use strong passwords for all database users
 
 ### 3. Backend Setup
 
@@ -53,33 +47,15 @@ cd LMS-Project
    ```
 
 3. **Configure Environment Variables**
-   - Create a `.env` file in the backend directory
-   - Add the following configuration:
-   ```
-   # Database Configuration
-   DB_HOST=localhost
-   DB_USER=lms_user
-   DB_PASSWORD=lms123
-   DB_NAME=lms_db
-   DB_PORT=3306
-
-   # JWT Configuration
-   JWT_SECRET=your_jwt_secret_key
-   JWT_EXPIRES_IN=24h
-
-   # Server Configuration
-   PORT=5000
-   NODE_ENV=development
-
-   # File Upload Configuration
-   UPLOAD_PATH=uploads
-   ```
+   - Copy `.env.example` to `.env` in the backend directory
+   - Update the values in `.env` with your secure configuration
+   - Never commit the `.env` file to version control
 
 4. **Initialize Database**
    ```bash
    npm run init-db
    ```
-   This will create the necessary tables and an admin user.
+   This will create the necessary tables and prompt you to create an admin user.
 
 5. **Start Backend Server**
    ```bash
@@ -105,51 +81,26 @@ cd LMS-Project
    ```
    The application should open in your browser at http://localhost:3000
 
-## Default Admin Account
-- Email: admin@example.com
-- Password: admin123
+## Security Considerations
 
-## Authentication & Protected Routes
+1. **Environment Variables**
+   - Never commit `.env` files
+   - Use strong, unique passwords
+   - Rotate secrets regularly
+   - Use different credentials for development and production
 
-- **Authentication:**
-  - Users must log in to access any dashboard or protected route.
-  - JWT tokens and user info are stored in `localStorage` after login.
-- **ProtectedRoute Component:**
-  - All dashboard and dashboard-related routes are wrapped in a `ProtectedRoute` component.
-  - If a user is not authenticated, they are redirected to the login page (`/signin`).
-- **Role-based Dashboard:**
-  - The dashboard automatically displays the correct panel (Admin, Lecturer, or Student) based on the logged-in user's role.
-  - The role is determined from the user object stored in `localStorage` after login.
+2. **Database**
+   - Regularly backup the database
+   - Use strong passwords
+   - Limit database user privileges
+   - Enable SSL for database connections
 
-## Testing the Setup
-
-1. **Verify Backend**
-   - Open your browser or Postman
-   - Try accessing: http://localhost:5000/api/auth/login
-   - You should see a response (even if it's an error about missing credentials)
-
-2. **Verify Frontend**
-   - Open http://localhost:3000 in your browser
-   - You should see the login page
-   - Try logging in with the admin credentials
-   - After login, you should be redirected to the dashboard for your role
-   - If you log out, you will be redirected to the login page and cannot access dashboard routes
-
-## Common Issues and Solutions
-
-1. **Database Connection Issues**
-   - Ensure MySQL service is running
-   - Verify database credentials in `.env`
-   - Check if the database and user exist
-
-2. **Port Conflicts**
-   - If port 5000 is in use, change it in backend/.env
-   - If port 3000 is in use, the frontend will prompt to use a different port
-
-3. **Module Not Found Errors**
-   - Delete node_modules folder
-   - Delete package-lock.json
-   - Run `npm install` again
+3. **API Security**
+   - All sensitive routes are protected
+   - Input validation is implemented
+   - CORS is configured
+   - Rate limiting is enabled
+   - Use HTTPS in production
 
 ## Development Workflow
 
@@ -160,9 +111,9 @@ cd LMS-Project
 
 2. **Frontend Development**
    - React components are in `frontend/src/components`
-   - API calls should be made to `http://localhost:5000/api`
-   - Store JWT token in localStorage
-   - Use the `ProtectedRoute` component to protect any new routes that require authentication
+   - API calls should be made to the configured backend URL
+   - Store JWT token securely
+   - Use the `ProtectedRoute` component for authenticated routes
 
 ## Available Scripts
 
@@ -175,23 +126,6 @@ cd LMS-Project
 - `npm build` - Build for production
 - `npm test` - Run tests
 
-## Security Considerations
-
-1. **Environment Variables**
-   - Never commit `.env` files
-   - Use strong passwords in production
-   - Change JWT secret in production
-
-2. **Database**
-   - Regularly backup the database
-   - Use strong passwords
-   - Limit database user privileges
-
-3. **API Security**
-   - All sensitive routes are protected
-   - Input validation is implemented
-   - CORS is configured
-
 ## Contributing
 
 1. Create a new branch for your feature
@@ -202,206 +136,6 @@ cd LMS-Project
 
 This project is licensed under the MIT License.
 
-## API Documentation
+## Documentation
 
-### Authentication Endpoints
-
-#### Login
-```http
-POST /api/auth/login
-```
-Request body:
-```json
-{
-  "email": "user@example.com",
-  "password": "password123"
-}
-```
-Response:
-```json
-{
-  "token": "jwt_token_here",
-  "user": {
-    "id": 1,
-    "name": "John Doe",
-    "email": "user@example.com",
-    "role": "student"
-  }
-}
-```
-
-#### Register
-```http
-POST /api/auth/register
-```
-Request body:
-```json
-{
-  "name": "John Doe",
-  "email": "user@example.com",
-  "password": "password123",
-  "role": "student"
-}
-```
-
-### Course Endpoints
-
-#### Get All Courses
-```http
-GET /api/courses
-```
-Response:
-```json
-[
-  {
-    "id": 1,
-    "title": "Introduction to Programming",
-    "description": "Learn the basics of programming",
-    "instructor": "Dr. Smith",
-    "enrollment_count": 45
-  }
-]
-```
-
-#### Get Course Details
-```http
-GET /api/courses/:id
-```
-Response:
-```json
-{
-  "id": 1,
-  "title": "Introduction to Programming",
-  "description": "Learn the basics of programming",
-  "instructor": "Dr. Smith",
-  "modules": [
-    {
-      "id": 1,
-      "title": "Module 1",
-      "content": "Introduction to variables"
-    }
-  ]
-}
-```
-
-### Assignment Endpoints
-
-#### Get Assignments
-```http
-GET /api/assignments
-```
-Response:
-```json
-[
-  {
-    "id": 1,
-    "title": "Programming Assignment 1",
-    "description": "Create a simple calculator",
-    "due_date": "2024-03-01",
-    "course_id": 1
-  }
-]
-```
-
-#### Submit Assignment
-```http
-POST /api/assignments/:id/submit
-```
-Request body:
-```json
-{
-  "submission": "Your assignment content here",
-  "attachments": ["file1.pdf", "file2.zip"]
-}
-```
-
-### User Management Endpoints
-
-#### Get User Profile
-```http
-GET /api/users/profile
-```
-Response:
-```json
-{
-  "id": 1,
-  "name": "John Doe",
-  "email": "user@example.com",
-  "role": "student",
-  "enrolled_courses": [
-    {
-      "id": 1,
-      "title": "Introduction to Programming"
-    }
-  ]
-}
-```
-
-#### Update User Profile
-```http
-PUT /api/users/profile
-```
-Request body:
-```json
-{
-  "name": "John Doe",
-  "email": "newemail@example.com"
-}
-```
-
-### Error Handling
-
-All API endpoints follow a consistent error response format:
-
-```json
-{
-  "error": {
-    "code": "ERROR_CODE",
-    "message": "Human readable error message",
-    "details": {
-      "field": "Additional error details if applicable"
-    }
-  }
-}
-```
-
-Common error codes:
-- `AUTH_ERROR`: Authentication related errors
-- `VALIDATION_ERROR`: Input validation errors
-- `NOT_FOUND`: Resource not found
-- `FORBIDDEN`: Insufficient permissions
-- `SERVER_ERROR`: Internal server errors
-
-### Authentication
-
-Most endpoints require authentication using JWT tokens. Include the token in the Authorization header:
-
-```http
-Authorization: Bearer your_jwt_token_here
-```
-
-### Rate Limiting
-
-API endpoints are rate-limited to prevent abuse:
-- 100 requests per minute for authenticated users
-- 20 requests per minute for unauthenticated users
-
-### Pagination
-
-List endpoints support pagination using query parameters:
-```http
-GET /api/courses?page=1&limit=10
-```
-
-Response includes pagination metadata:
-```json
-{
-  "data": [...],
-  "pagination": {
-    "current_page": 1,
-    "total_pages": 5,
-    "total_items": 50,
-    "items_per_page": 10
-  }
-}
-``` 
+For detailed API documentation and development guidelines, please refer to the project's internal documentation or contact the development team. 
