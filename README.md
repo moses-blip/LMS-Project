@@ -31,8 +31,15 @@ cd LMS-Project
 2. **Create Database and User**
    - Open MySQL Command Line Client or MySQL Workbench
    - Log in with your root password
-   - Create a new database and user with appropriate permissions
-   - Use strong passwords for all database users
+   - Run the following commands (replace `your_username` and `your_password` with secure values):
+   ```sql
+   CREATE DATABASE IF NOT EXISTS lms_db;
+   CREATE USER IF NOT EXISTS 'your_username'@'localhost' IDENTIFIED BY 'your_password';
+   GRANT ALL PRIVILEGES ON lms_db.* TO 'your_username'@'localhost';
+   FLUSH PRIVILEGES;
+   ```
+   - Make sure to use a strong password and remember these credentials for your `.env` file
+   - Never use default or weak passwords in production
 
 ### 3. Backend Setup
 
