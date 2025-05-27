@@ -122,11 +122,13 @@ router.get('/', authenticate, async (req, res) => {
       case 'LECTURER':
         // Fetch courses taught by lecturer
         const courses = await prisma.course.findMany({
-          where: { lecturerId: userId },
+          where: {
+            lecturerId: userId
+          },
           include: {
             enrollment: {
               include: {
-                student: true
+                user: true
               }
             },
             assignment: {
@@ -145,7 +147,7 @@ router.get('/', authenticate, async (req, res) => {
         // Calculate dashboard metrics
         const unitsInstructing = courses.length;
         const studentsInstructing = new Set(courses.flatMap(c => 
-          c.enrollment.map(e => e.studentId)
+          c.enrollment.map(e => e.user.id)
         )).size;
 
         const submissionsReceived = courses.reduce((total, course) =>
@@ -158,8 +160,8 @@ router.get('/', authenticate, async (req, res) => {
         const courseReport = {};
         for (const course of courses) {
           const totalStudents = course.enrollment.length;
-          const notStarted = course.enrollment.filter(e => e.progress === 0).length;
-          const completed = course.enrollment.filter(e => e.progress === 100).length;
+          const notStarted = course.enrollment.filter(e => !e.progress).length;
+          const completed = course.enrollment.filter(e => e.status === 'COMPLETED').length;
           const inProgress = totalStudents - notStarted - completed;
 
           courseReport[course.name] = {
@@ -167,11 +169,50 @@ router.get('/', authenticate, async (req, res) => {
             notStarted,
             inProgress,
             completed,
-            averageTimeSpent: '2 hours', // This should be calculated from actual data
+            averageTimeSpent: '2 hours',
             engagement: totalStudents > 0 ? `${Math.round((inProgress + completed) / totalStudents * 100)}%` : '0%',
-            mostSkippedModule: 'Module 1' // This should be calculated from actual data
+            mostSkippedModule: 'Module 1'
           };
         }
+
+        // Calculate student progress metrics
+        const allStudents = courses.flatMap(c => c.enrollment.map(e => e.user));
+        const uniqueStudents = Array.from(new Set(allStudents.map(s => s.id)))
+          .map(id => allStudents.find(s => s.id === id));
+
+        // Calculate average completion
+        const averageCompletion = uniqueStudents.length > 0
+          ? Math.round(uniqueStudents.reduce((sum, student) => {
+              const studentEnrollments = courses.flatMap(c => 
+                c.enrollment.filter(e => e.user.id === student.id)
+              );
+              const completedCount = studentEnrollments.filter(e => e.status === 'COMPLETED').length;
+              return sum + (completedCount / Math.max(1, studentEnrollments.length) * 100);
+            }, 0) / uniqueStudents.length)
+          : 0;
+
+        // Find top performer
+        const topPerformer = uniqueStudents.reduce((top, student) => {
+          const studentEnrollments = courses.flatMap(c => 
+            c.enrollment.filter(e => e.user.id === student.id)
+          );
+          const completedCount = studentEnrollments.filter(e => e.status === 'COMPLETED').length;
+          const progress = (completedCount / Math.max(1, studentEnrollments.length)) * 100;
+          
+          return (!top || progress > top.progress)
+            ? { name: `${student.firstName} ${student.lastName}`, progress }
+            : top;
+        }, null) || { name: 'No students yet', progress: 0 };
+
+        // Count at-risk students (below 50% progress)
+        const atRiskCount = uniqueStudents.filter(student => {
+          const studentEnrollments = courses.flatMap(c => 
+            c.enrollment.filter(e => e.user.id === student.id)
+          );
+          const completedCount = studentEnrollments.filter(e => e.status === 'COMPLETED').length;
+          const progress = (completedCount / Math.max(1, studentEnrollments.length)) * 100;
+          return progress < 50;
+        }).length;
 
         // Get recent activities
         const recentActivities = await prisma.activityLog.findMany({
@@ -180,48 +221,14 @@ router.get('/', authenticate, async (req, res) => {
               in: courses.map(c => c.id)
             }
           },
+          include: {
+            user: true
+          },
           orderBy: {
             timestamp: 'desc'
           },
-          take: 5,
-          include: {
-            user: true
-          }
+          take: 5
         });
-
-        // Calculate student progress
-        const allStudentIds = new Set(courses.flatMap(c => 
-          c.enrollment.map(e => e.studentId)
-        ));
-
-        const studentProgressData = await Promise.all(Array.from(allStudentIds).map(async studentId => {
-          const studentEnrollments = courses.flatMap(c => 
-            c.enrollment.filter(e => e.studentId === studentId)
-          );
-          
-          const progress = studentEnrollments.reduce((avg, e) => avg + e.progress, 0) / studentEnrollments.length;
-
-          const student = await prisma.user.findUnique({
-            where: { id: studentId },
-            select: { firstName: true, lastName: true }
-          });
-
-          return {
-            name: `${student.firstName} ${student.lastName}`,
-            progress
-          };
-        }));
-
-        // Calculate average completion and find top performer
-        const averageCompletion = studentProgressData.length > 0
-          ? Math.round(studentProgressData.reduce((sum, s) => sum + s.progress, 0) / studentProgressData.length)
-          : 0;
-
-        const topPerformer = studentProgressData.reduce((top, current) => 
-          current.progress > (top?.progress || 0) ? current : top
-        , { name: 'No students yet', progress: 0 });
-
-        const atRiskCount = studentProgressData.filter(s => s.progress < 40).length;
 
         dashboardData = {
           role: 'LECTURER',
@@ -240,7 +247,7 @@ router.get('/', authenticate, async (req, res) => {
             recentActivities: recentActivities.map(activity => ({
               name: `${activity.user.firstName} ${activity.user.lastName}`,
               action: activity.action,
-              time: activity.timestamp
+              time: new Date(activity.timestamp).toLocaleString()
             }))
           }
         };

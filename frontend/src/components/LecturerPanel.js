@@ -42,20 +42,24 @@ const LecturerPanel = () => {
 
         const response = await fetch(`http://localhost:4000/api/dashboard`, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
           }
         });
 
         if (!response.ok) {
-          throw new Error('Failed to fetch lecturer dashboard');
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to fetch dashboard data');
         }
 
         const data = await response.json();
-        if (data.role !== 'LECTURER') {
-          throw new Error('Invalid role');
+        
+        // Validate the response data structure
+        if (!data || data.role !== 'LECTURER') {
+          throw new Error('Invalid role or missing data');
         }
 
-        // If there's no course data, set default values
+        // Set default values for missing data
         const defaultCourseReport = {
           'No courses': {
             totalStudents: 0,
@@ -79,7 +83,7 @@ const LecturerPanel = () => {
           }
         });
 
-        // Set selected course
+        // Set selected course to first available course or default
         const courses = Object.keys(data.courseReport || {});
         setSelectedCourse(courses.length > 0 ? courses[0] : 'No courses');
       } catch (err) {
