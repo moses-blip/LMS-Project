@@ -9,6 +9,8 @@ function Login() {
     email: '',
     password: ''
   });
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,8 +22,11 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setIsLoading(true);
+
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('http://localhost:4000/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -37,11 +42,11 @@ function Login() {
         localStorage.setItem('user', JSON.stringify(data.user));
         
         // Redirect based on role
-        switch(data.user.role) {
+        switch(data.user.role.toLowerCase()) {
           case 'admin':
             navigate('/dashboard/admin');
             break;
-          case 'instructor':
+          case 'lecturer':
             navigate('/dashboard/lecturer');
             break;
           case 'student':
@@ -51,18 +56,18 @@ function Login() {
             navigate('/dashboard');
         }
       } else {
-        alert(data.message || 'Login failed');
+        setError(data.message || 'Login failed');
       }
     } catch (error) {
       console.error('Login error:', error);
-      alert('Login failed. Please try again.');
+      setError('Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className={styles.loginPage}>
-      
-      
       {/* Main Login Container */}
       <div className={styles.container}>
         <div className={styles.welcomeSection}>
@@ -75,6 +80,7 @@ function Login() {
 
         <div className={styles.loginForm}>
           <h2>Sign in</h2>
+          {error && <div className={styles.error}>{error}</div>}
           <form onSubmit={handleSubmit}>
             <label>Email Address</label>
             <input 
@@ -96,8 +102,16 @@ function Login() {
               required
             />
 
-            <button type="submit">Sign In</button>
+            <button 
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Signing In...' : 'Sign In'}
+            </button>
           </form>
+          <div className={styles.registerLink}>
+            <p>Don't have an account? <Link to="/register">Register here</Link></p>
+          </div>
           <div className={styles.socialIcons}>
             <i className="fab fa-facebook"></i>
             <i className="fab fa-instagram"></i>

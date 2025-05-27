@@ -1,5 +1,4 @@
-// src/components/LecturerPanel.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './LecturerPanel.module.css';
 import {
@@ -12,61 +11,117 @@ import {
   PlusCircle,
 } from 'lucide-react';
 
-const dashboardData = {
-  courseReport: {
-    Webdevelopment: {
-      notStarted: 10,
-      inProgress: 60,
-      completed: 30,
-      totalStudents: 100,
-      averageTimeSpent: '12h 30m',
-      engagement: 'Medium',
-      mostSkippedModule: 'Module 3: Forms',
-    },
-    Python: {
-      notStarted: 5,
-      inProgress: 25,
-      completed: 70,
-      totalStudents: 120,
-      averageTimeSpent: '18h 45m',
-      engagement: 'High',
-      mostSkippedModule: 'Module 4: Functions',
-    },
-    DataScience: {
-      notStarted: 8,
-      inProgress: 42,
-      completed: 50,
-      totalStudents: 90,
-      averageTimeSpent: '15h 10m',
-      engagement: 'Medium-High',
-      mostSkippedModule: 'Module 2: Statistics Basics',
-    },
-  },
-  studentProgress: {
-    averageCompletion: 64,
-    topPerformer: { name: 'Jane Doe', percentage: 98 },
-    atRiskCount: 5,
-    recentActivities: [
-      { name: 'John Kimani', action: 'submitted Assignment 2', time: '3 hrs ago' },
-      { name: 'Aisha Mbogo', action: 'viewed Module 5', time: '2 hrs ago' },
-    ],
-  },
-};
-
 const LecturerPanel = () => {
-  const courses = Object.keys(dashboardData.courseReport);
-  const [selectedCourse, setSelectedCourse] = useState(courses[0]);
+  const [dashboardData, setDashboardData] = useState({
+    unitsInstructing: 0,
+    studentsInstructing: 0,
+    submissionsReceived: 0,
+    courseReport: {},
+    studentProgress: {
+      averageCompletion: 0,
+      topPerformer: { name: 'No students yet', percentage: 0 },
+      atRiskCount: 0,
+      recentActivities: [],
+    },
+  });
 
-  const report = dashboardData.courseReport[selectedCourse];
-  const progressData = dashboardData.studentProgress;
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState('No courses');
 
-  const total = report.notStarted + report.inProgress + report.completed;
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    async function fetchDashboardData() {
+      try {
+        setLoading(true);
+        const userData = JSON.parse(localStorage.getItem('user'));
+        if (!userData) {
+          throw new Error('No user data found');
+        }
+
+        const response = await fetch(`http://localhost:4000/api/dashboard`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch lecturer dashboard');
+        }
+
+        const data = await response.json();
+        if (data.role !== 'LECTURER') {
+          throw new Error('Invalid role');
+        }
+
+        // If there's no course data, set default values
+        const defaultCourseReport = {
+          'No courses': {
+            totalStudents: 0,
+            notStarted: 0,
+            inProgress: 0,
+            completed: 0,
+            averageTimeSpent: '0 hours',
+            engagement: '0%',
+            mostSkippedModule: 'N/A'
+          }
+        };
+
+        setDashboardData({
+          ...data,
+          courseReport: Object.keys(data.courseReport || {}).length > 0 ? data.courseReport : defaultCourseReport,
+          studentProgress: data.studentProgress || {
+            averageCompletion: 0,
+            topPerformer: { name: 'No students yet', percentage: 0 },
+            atRiskCount: 0,
+            recentActivities: []
+          }
+        });
+
+        // Set selected course
+        const courses = Object.keys(data.courseReport || {});
+        setSelectedCourse(courses.length > 0 ? courses[0] : 'No courses');
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchDashboardData();
+  }, []);
+
+  if (loading) {
+    return <div className={styles.loading}>Loading lecturer dashboard...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.error}>Error: {error}</div>;
+  }
+
+  const report = dashboardData.courseReport[selectedCourse] || {
+    totalStudents: 0,
+    notStarted: 0,
+    inProgress: 0,
+    completed: 0,
+    averageTimeSpent: '0 hours',
+    engagement: '0%',
+    mostSkippedModule: 'N/A'
+  };
+
+  const progressData = dashboardData.studentProgress || {
+    averageCompletion: 0,
+    topPerformer: { name: 'No students yet', percentage: 0 },
+    atRiskCount: 0,
+    recentActivities: []
+  };
+
+  const total = Math.max(1, report.notStarted + report.inProgress + report.completed);
   const notStartedPercent = (report.notStarted / total) * 100;
   const inProgressPercent = (report.inProgress / total) * 100;
   const completedPercent = (report.completed / total) * 100;
-
-  const navigate = useNavigate();
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -86,21 +141,21 @@ const LecturerPanel = () => {
           <BookOpen size={28} className={styles.icon} />
           <div>
             <p className={styles.infoLabel}>Units Instructing</p>
-            <h4 className={styles.infoValue}>4</h4>
+            <h4 className={styles.infoValue}>{dashboardData.unitsInstructing || 0}</h4>
           </div>
         </div>
         <div className={styles.infoCard}>
           <UserCheck size={28} className={styles.icon} />
           <div>
             <p className={styles.infoLabel}>Students Instructing</p>
-            <h4 className={styles.infoValue}>85</h4>
+            <h4 className={styles.infoValue}>{dashboardData.studentsInstructing || 0}</h4>
           </div>
         </div>
         <div className={styles.infoCard}>
           <FileText size={28} className={styles.icon} />
           <div>
             <p className={styles.infoLabel}>Submissions Received</p>
-            <h4 className={styles.infoValue}>122</h4>
+            <h4 className={styles.infoValue}>{dashboardData.submissionsReceived || 0}</h4>
           </div>
         </div>
       </div>
@@ -157,13 +212,17 @@ const LecturerPanel = () => {
 
           <div className={styles.recentActivity}>
             <h4>Recent Activity</h4>
-            <ul>
-              {progressData.recentActivities.map((activity, idx) => (
-                <li key={idx}>
-                  🧑‍🎓 <strong>{activity.name}</strong> {activity.action} • {activity.time}
-                </li>
-              ))}
-            </ul>
+            {progressData.recentActivities.length > 0 ? (
+              <ul>
+                {progressData.recentActivities.map((activity, idx) => (
+                  <li key={idx}>
+                    🧑‍🎓 <strong>{activity.name}</strong> {activity.action} • {activity.time}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className={styles.emptyState}>No recent activities</p>
+            )}
           </div>
         </div>
 
@@ -176,7 +235,7 @@ const LecturerPanel = () => {
               value={selectedCourse}
               onChange={handleCourseChange}
             >
-              {courses.map((course) => (
+              {Object.keys(dashboardData.courseReport).map((course) => (
                 <option key={course} value={course}>
                   {course}
                 </option>

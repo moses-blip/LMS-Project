@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DashboardLayout from './DashboardLayout';
 import styles from './GeneralInfoPage.module.css';
 
 const GeneralInfoPage = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [userRole, setUserRole] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      navigate('/signin');
+      return;
+    }
+    setUserRole(user.role.toLowerCase());
+  }, [navigate]);
 
   const toggleTheme = () => {
     setDarkMode((prev) => !prev);
     document.body.setAttribute('data-theme', darkMode ? 'light' : 'dark');
   };
 
+  if (!userRole) return <p>Loading...</p>;
+
   return (
-    <DashboardLayout>
+    <DashboardLayout userRole={userRole}>
       <div className={styles.container}>
         <h2 className={styles.title}>General Information</h2>
 

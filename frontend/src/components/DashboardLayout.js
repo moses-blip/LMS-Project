@@ -87,10 +87,30 @@ const DashboardLayout = ({ children, userRole = 'student' }) => {
           <div className={styles.todoListSmall}>
             <h4>Admin Quick Links</h4>
             <ul>
-              <li><Link to="/manage-users">Manage Users</Link></li>
-              <li><Link to="/manage-courses">Manage Courses</Link></li>
-              <li><Link to="/analytics">Analytics</Link></li>
-              <li><Link to="/monitor">Monitor</Link></li>
+              <li>
+                <Link to="/manage-users">
+                  <FaUsers className={styles.quickLinkIcon} />
+                  Manage Users
+                </Link>
+              </li>
+              <li>
+                <Link to="/manage-courses">
+                  <FaBook className={styles.quickLinkIcon} />
+                  Manage Courses
+                </Link>
+              </li>
+              <li>
+                <Link to="/analytics">
+                  <FaChartBar className={styles.quickLinkIcon} />
+                  Analytics
+                </Link>
+              </li>
+              <li>
+                <Link to="/monitor">
+                  <FaUserShield className={styles.quickLinkIcon} />
+                  Monitor
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -143,11 +163,28 @@ const DashboardLayout = ({ children, userRole = 'student' }) => {
         <div className={styles.todoListSmall}>
           <h4>To Do List</h4>
           <ul>
-            <li>Complete Quiz 1</li>
-            <li>Read Chapter 4</li>
-            <li>Join Virtual Class</li>
-            <li>Submit Assignment</li>
-            <li>Group Discussion Prep</li>
+            {[
+              { task: 'Complete Quiz 1', dueDate: 'Today' },
+              { task: 'Read Chapter 4', dueDate: 'Tomorrow' },
+              { task: 'Join Virtual Class', dueDate: '2:00 PM' },
+              { task: 'Submit Assignment', dueDate: 'Friday' },
+              { task: 'Group Discussion Prep', dueDate: 'Next Week' }
+            ].map((item, index) => (
+              <li key={index} className={styles.todoItemSmall}>
+                <div className={styles.todoCheckWrapper}>
+                  <input
+                    type="checkbox"
+                    checked={checkedTasks[item.task] || false}
+                    onChange={() => handleCheckboxChange(item.task)}
+                    className={styles.todoCheckboxSmall}
+                  />
+                  <span className={`${styles.todoTaskSmall} ${checkedTasks[item.task] ? styles.checked : ''}`}>
+                    {item.task}
+                  </span>
+                </div>
+                <span className={styles.timeTagSmall}>{item.dueDate}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

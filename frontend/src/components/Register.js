@@ -10,29 +10,36 @@ function Register() {
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'student'
+    role: 'STUDENT'
   });
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
+    const value = e.target.name === 'role' 
+      ? e.target.value.toUpperCase()
+      : e.target.value;
+      
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: value
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
+      setIsLoading(false);
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch('http://localhost:4000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -54,7 +61,7 @@ function Register() {
         localStorage.setItem('user', JSON.stringify(data.user));
         
         // Redirect based on role
-        switch(data.user.role) {
+        switch(data.user.role.toLowerCase()) {
           case 'admin':
             navigate('/dashboard/admin');
             break;
@@ -73,6 +80,8 @@ function Register() {
     } catch (error) {
       console.error('Registration error:', error);
       setError('Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -123,8 +132,8 @@ function Register() {
                 <input
                   type="radio"
                   name="role"
-                  value="student"
-                  checked={formData.role === 'student'}
+                  value="STUDENT"
+                  checked={formData.role === 'STUDENT'}
                   onChange={handleChange}
                 />
                 Student
@@ -133,8 +142,8 @@ function Register() {
                 <input
                   type="radio"
                   name="role"
-                  value="lecturer"
-                  checked={formData.role === 'lecturer'}
+                  value="LECTURER"
+                  checked={formData.role === 'LECTURER'}
                   onChange={handleChange}
                 />
                 Lecturer
@@ -157,7 +166,13 @@ function Register() {
               placeholder="Retype Password"
               required
             />
-            <button type="submit" className={styles.registerBtn}>REGISTER</button>
+            <button 
+              type="submit" 
+              className={styles.registerBtn}
+              disabled={isLoading}
+            >
+              {isLoading ? 'REGISTERING...' : 'REGISTER'}
+            </button>
           </form>
         </div>
       </div>

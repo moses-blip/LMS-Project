@@ -121,6 +121,11 @@ function AppRoutes() {
           </DashboardLayout>
         </ProtectedRoute>
       } />
+      <Route path="/account/general-info" element={
+        <ProtectedRoute>
+          <GeneralInfoPage />
+        </ProtectedRoute>
+      } />
       <Route path="/virtual-classroom" element={
         <ProtectedRoute>
           <DashboardLayout userRole="student">

@@ -1,16 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './AdminPanel.module.css';
 import { Link } from 'react-router-dom';
 import adminVector from './../assets/adminvector.jpg';
 import jsPDF from 'jspdf';
-
-const studentProgress = [
-  { name: 'Alice', progress: 85, color: 'navy' },
-  { name: 'Brian', progress: 72, color: 'yellow' },
-  { name: 'Clara', progress: 60, color: 'lightblue' },
-  { name: 'Daniel', progress: 90, color: 'orange' },
-  { name: 'Emily', progress: 78, color: 'blue' },
-];
 
 function CircularProgress({ percentage, label }) {
   const radius = 80;
@@ -93,13 +85,50 @@ function ReportFilterModal({ visible, onClose, onApply, reportType }) {
 }
 
 function AdminPanelContent() {
-  const adminName = "Mr. Kalama";
-  const adminWorkingHoursPercent = 75;
-  const targetHours = 8;
-  const completedHours = Math.round((adminWorkingHoursPercent / 100) * targetHours);
-
+  const [adminData, setAdminData] = useState({
+    studentProgress: [],
+    adminWorkingHours: {
+      targetHours: 8,
+      completedHours: 0,
+      percentage: 0
+    }
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentReportType, setCurrentReportType] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const userData = JSON.parse(localStorage.getItem('user'));
+        if (!userData) {
+          throw new Error('No user data found');
+        }
+
+        const response = await fetch('http://localhost:4000/api/dashboard', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch admin dashboard data');
+        }
+
+        const data = await response.json();
+        setAdminData(data);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const openFilterModal = (reportType) => {
     setCurrentReportType(reportType);
@@ -122,9 +151,16 @@ function AdminPanelContent() {
     }
   };
 
-  const handleDownload = (type) => {
-    alert(`Downloading ${type} report...`);
-  };
+  if (loading) {
+    return <div className={styles.loading}>Loading admin dashboard...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.error}>Error: {error}</div>;
+  }
+
+  const { studentProgress, adminWorkingHours } = adminData;
+  const adminName = JSON.parse(localStorage.getItem('user'))?.firstName || 'Admin';
 
   return (
     <div className={styles.container}>
@@ -145,7 +181,10 @@ function AdminPanelContent() {
         <div className={styles.progressSection}>
           <div className={styles.sectionHeader}>
             <h3 className={styles.subtitle}>Student Progress</h3>
-            <Link to="/analytics" className={styles.viewButton}>Full Report</Link>
+            <div className={styles.metrics}>
+              <span>Total Students: {studentProgress.length}</span>
+              <span>Average Progress: {adminWorkingHours.percentage}%</span>
+            </div>
           </div>
           <hr className={styles.divider} />
           {studentProgress.map((student, index) => (
@@ -169,32 +208,26 @@ function AdminPanelContent() {
           ))}
         </div>
 
-        {/* Working Hours Chart (✅ Updated) */}
+        {/* System Overview */}
         <div className={styles.workingHoursCard}>
           <div className={styles.sectionHeader}>
-            <h3 className={styles.subtitle}>Working Hours</h3>
-            <span className={styles.viewButton}>Today</span>
+            <h3 className={styles.subtitle}>System Overview</h3>
           </div>
           <hr className={styles.divider} />
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <CircularProgress percentage={adminWorkingHoursPercent} />
-            <div style={{ marginTop: 10, fontSize: '16px', color: '#333' }}>
-              <strong>{completedHours}</strong> of <strong>{targetHours}</strong> hours logged
-            </div>
-            <div style={{ fontSize: '14px', color: '#666', marginTop: 4 }}>
-              by <strong>{adminName}</strong>
+          <div className={styles.metricsGrid}>
+            <div className={styles.metricItem}>
+              <h4>System Progress</h4>
+              <CircularProgress percentage={adminWorkingHours.percentage} />
             </div>
           </div>
-          <div className={styles.legend}>
-            <div className={styles.dotLegend}>
-              <span className={`${styles.dot} ${styles.blue}`}></span>
-              <span>Completed</span>
-            </div>
-            <div className={styles.dotLegend}>
-              <span className={`${styles.dot} ${styles.yellow}`}></span>
-              <span>Pending</span>
-            </div>
-          </div>
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+      <div className={styles.recentActivitySection}>
+        <h3 className={styles.subtitle}>Recent Activity</h3>
+        <div className={styles.activityList}>
+          {/* Recent activity data would be populated here */}
         </div>
       </div>
 

@@ -2,11 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: fit-content;
+  padding: 1rem;
+  background: linear-gradient(145deg, #ffffff, #f5f7fb);
+  border-radius: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(63, 81, 181, 0.1);
 }
 
 .header {
@@ -21,56 +24,149 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
+}
+
+.monthNavigation button {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: #3f51b5;
+  font-size: 1rem;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 2px 8px rgba(63, 81, 181, 0.1);
+  background: white;
+}
+
+.monthNavigation button:hover {
+  background: #3f51b5;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.2);
+}
+
+.monthNavigation span {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a237e;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .daysGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  max-height: 150px; /* Limit height to roughly 4 rows */
-  overflow: hidden;  /* Hide overflow rows */
+  gap: 4px;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
 }
 
 .dayName {
-  font-size: 14px;
-  color: #6c757d;
+  font-size: 0.75rem;
+  color: #3f51b5;
   text-align: center;
+  font-weight: 600;
+  padding: 4px 0;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+}
+
+.todayName {
+  background: linear-gradient(45deg, #3f51b5, #5c6bc0);
+  color: white;
+  border-radius: 8px;
+  padding: 4px 0;
+  font-weight: 700;
 }
 
 .dayNumber {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  font-size: 14px;
-  color: #343a40;
+  font-size: 0.85rem;
+  color: #424242;
   cursor: pointer;
-  padding: 6px;
-  text-align: center;
+  transition: all 0.3s ease;
+  margin: auto;
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
 }
 
-.dayNumber:hover {
-  background-color: #e9ecef;
-}
-
-.selected {
-  background-color: #212529;
-  color: #ffffff;
+.dayNumber:hover:not(:empty) {
+  background: rgba(63, 81, 181, 0.1);
+  color: #3f51b5;
+  transform: scale(1.1);
 }
 
 .today {
-  background-color: #007bff; /* Or your primary theme color */
-  color: white;
+  background: linear-gradient(45deg, #3f51b5, #5c6bc0);
+  color: white !important;
+  font-weight: 600;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(63, 81, 181, 0.2);
+}
+
+.today::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background: linear-gradient(45deg, #3f51b5, #5c6bc0);
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(63, 81, 181, 0.3);
+}
+
+.today:hover {
+  background: linear-gradient(45deg, #303f9f, #3f51b5);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
+}
+
+.selected {
+  background: rgba(63, 81, 181, 0.15);
+  color: #3f51b5;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(63, 81, 181, 0.1);
+}
+
+.otherMonth {
+  color: #bbb;
+  opacity: 0.5;
+}
+
+.hasEvent {
+  position: relative;
+}
+
+.hasEvent::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  font-weight: bold;
-  transition: all 0.3s ease;
+  background: #3f51b5;
+  box-shadow: 0 0 4px rgba(63, 81, 181, 0.4);
 }

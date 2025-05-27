@@ -25,7 +25,7 @@ const Dashboard = () => {
     }
 
     // Set role from user data
-    setRole(user.role);
+    setRole(user.role.toLowerCase());
     setLoading(false);
   }, [navigate]);
   
@@ -47,6 +47,9 @@ const Dashboard = () => {
         return null;
     }
   };
+
+  // Only render if we have a role
+  if (!role) return <p style={{ padding: "2rem" }}>Loading...</p>;
 
   return <DashboardLayout userRole={role}>{renderDashboardPanel()}</DashboardLayout>;
 };

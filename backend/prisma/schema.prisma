@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String        @unique
+  role        Role
+  password    String
+  activitylog ActivityLog[]
+  attendance  Attendance[]
+  course      Course[]
+  enrollment  Enrollment[]
+  submission  Submission[]
+}
+
+model Course {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String?
+  lecturerId  Int
+  assignment  Assignment[]
+  user        User         @relation(fields: [lecturerId], references: [id])
+  enrollment  Enrollment[]
+  lecture     Lecture[]
+
+  @@index([lecturerId])
+}
+
+model Enrollment {
+  id        Int              @id @default(autoincrement())
+  studentId Int
+  courseId  Int
+  status    EnrollmentStatus @default(ACTIVE)
+  course    Course          @relation(fields: [courseId], references: [id])
+  user      User            @relation(fields: [studentId], references: [id])
+
+  @@index([courseId])
+  @@index([studentId])
+}
+
+model Assignment {
+  id          Int          @id @default(autoincrement())
+  courseId    Int
+  title       String
+  description String?
+  dueDate     DateTime?
+  maxScore    Int
+  course      Course       @relation(fields: [courseId], references: [id])
+  submission  Submission[]
+
+  @@index([courseId])
+}
+
+model Submission {
+  id           Int              @id @default(autoincrement())
+  assignmentId Int
+  studentId    Int
+  submittedAt  DateTime        @default(now())
+  score        Int?
+  feedback     String?
+  status       SubmissionStatus @default(SUBMITTED)
+  assignment   Assignment      @relation(fields: [assignmentId], references: [id])
+  user         User           @relation(fields: [studentId], references: [id])
+
+  @@index([assignmentId])
+  @@index([studentId])
+}
+
+model Lecture {
+  id         Int          @id @default(autoincrement())
+  courseId   Int
+  title      String
+  contentURL String?
+  order      Int
+  attendance Attendance[]
+  course     Course      @relation(fields: [courseId], references: [id])
+
+  @@index([courseId])
+}
+
+model Attendance {
+  id        Int      @id @default(autoincrement())
+  lectureId Int
+  studentId Int
+  attended  Boolean  @default(false)
+  date      DateTime
+  lecture   Lecture  @relation(fields: [lectureId], references: [id])
+  user      User     @relation(fields: [studentId], references: [id])
+
+  @@index([lectureId])
+  @@index([studentId])
+}
+
+model ActivityLog {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  action    String
+  timestamp DateTime @default(now())
+  courseId  Int?
+  user      User    @relation(fields: [studentId], references: [id])
+
+  @@index([studentId])
+}
+
+enum Role {
+  STUDENT
+  LECTURER
+  ADMIN
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+}
+
+enum SubmissionStatus {
+  SUBMITTED
+  GRADED
+  LATE
+}

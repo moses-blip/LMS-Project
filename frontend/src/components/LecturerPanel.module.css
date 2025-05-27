@@ -198,8 +198,8 @@
     position: center;
     background: conic-gradient(
       #ffc233 0% 40%,       /* Completed */
-      #011252 40% 75%,      /* In Progress */
-      #ede103 75% 100%      /* Not Started */
+      #0091f8 40% 75%,      /* In Progress */
+      #ddd 75% 100%      /* Not Started */
     );
     margin: 1rem auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
