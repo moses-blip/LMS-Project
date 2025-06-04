@@ -4,55 +4,98 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 30px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
-  font-family: 'Inter', sans-serif;
-  flex-wrap: wrap;
+  padding: 16px 32px;
+  background-color: white;
+  border-bottom: 1px solid #eaeaea;
+  position: relative;
+  z-index: 100;
 }
 
-/* LEFT SIDE */
 .left {
   display: flex;
   align-items: center;
 }
 
 .logo {
-  height: 60px;
+  width: 40px;
+  height: auto;
   margin-right: 10px;
 }
 
 .institution {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
   color: #003366;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .institution span {
-  color: #00509e;
-  font-weight: 600;
+  color: #007bff;
 }
 
-/* RIGHT SIDE */
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 .right {
   display: flex;
   align-items: center;
-  font-size: 1rem;
-  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .right a {
   text-decoration: none;
-  color: #003366;
+  color: #333;
   font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.right a:hover {
-  color: #00509e;
+  font-size: 15px;
 }
 
 .dot {
-  margin: 0 8px;
-  color: #888;
+  color: #999;
+  font-size: 18px;
+}
+
+.menuBtn {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menuBtn {
+    display: block;
+  }
+
+  .right {
+    display: none;
+    position: absolute;
+    top: 64px;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .right.show {
+    display: flex;
+  }
+
+  .right a {
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .dot {
+    display: none;
+  }
 }

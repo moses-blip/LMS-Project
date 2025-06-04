@@ -7,121 +7,145 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id          Int           @id @default(autoincrement())
-  firstName   String
-  lastName    String
-  email       String        @unique
-  role        Role
-  password    String
-  activitylog ActivityLog[]
-  attendance  Attendance[]
-  course      Course[]
-  enrollment  Enrollment[]
-  submission  Submission[]
+model activitylog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  action    String
+  timestamp DateTime @default(now())
+  courseId  Int?
+  user      user     @relation(fields: [userId], references: [id], map: "ActivityLog_userId_fkey")
+
+  @@index([userId], map: "ActivityLog_userId_idx")
 }
 
-model Course {
-  id          Int           @id @default(autoincrement())
-  name        String
-  description String?
-  lecturerId  Int
-  assignment  Assignment[]
-  user        User         @relation(fields: [lecturerId], references: [id])
-  enrollment  Enrollment[]
-  lecture     Lecture[]
-
-  @@index([lecturerId])
-}
-
-model Enrollment {
-  id        Int              @id @default(autoincrement())
-  studentId Int
-  courseId  Int
-  status    EnrollmentStatus @default(ACTIVE)
-  course    Course          @relation(fields: [courseId], references: [id])
-  user      User            @relation(fields: [studentId], references: [id])
-
-  @@index([courseId])
-  @@index([studentId])
-}
-
-model Assignment {
+model assignment {
   id          Int          @id @default(autoincrement())
   courseId    Int
   title       String
   description String?
   dueDate     DateTime?
   maxScore    Int
-  course      Course       @relation(fields: [courseId], references: [id])
-  submission  Submission[]
+  course      course       @relation(fields: [courseId], references: [id], map: "Assignment_courseId_fkey")
+  submission  submission[]
 
-  @@index([courseId])
+  @@index([courseId], map: "Assignment_courseId_fkey")
 }
 
-model Submission {
-  id           Int              @id @default(autoincrement())
-  assignmentId Int
-  studentId    Int
-  submittedAt  DateTime        @default(now())
-  score        Int?
-  feedback     String?
-  status       SubmissionStatus @default(SUBMITTED)
-  assignment   Assignment      @relation(fields: [assignmentId], references: [id])
-  user         User           @relation(fields: [studentId], references: [id])
+model attendance {
+  id        Int      @id @default(autoincrement())
+  lectureId Int
+  userId    Int
+  attended  Boolean  @default(false)
+  date      DateTime
+  lecture   lecture  @relation(fields: [lectureId], references: [id], map: "Attendance_lectureId_fkey")
+  user      user     @relation(fields: [userId], references: [id], map: "Attendance_userId_fkey")
 
-  @@index([assignmentId])
-  @@index([studentId])
+  @@index([lectureId], map: "Attendance_lectureId_fkey")
+  @@index([userId], map: "Attendance_userId_fkey")
 }
 
-model Lecture {
+model course {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String?
+  lecturerId  Int
+  assignment  assignment[]
+  user        user         @relation(fields: [lecturerId], references: [id], map: "Course_lecturerId_fkey")
+  enrollment  enrollment[]
+  lecture     lecture[]
+  message     message[]
+
+  @@index([lecturerId], map: "Course_lecturerId_fkey")
+}
+
+model enrollment {
+  id       Int               @id @default(autoincrement())
+  userId   Int
+  courseId Int
+  status   enrollment_status @default(ACTIVE)
+  course   course            @relation(fields: [courseId], references: [id], map: "Enrollment_courseId_fkey")
+  user     user              @relation(fields: [userId], references: [id], map: "Enrollment_userId_fkey")
+
+  @@index([courseId], map: "Enrollment_courseId_fkey")
+  @@index([userId], map: "Enrollment_userId_fkey")
+}
+
+model lecture {
   id         Int          @id @default(autoincrement())
   courseId   Int
   title      String
   contentURL String?
   order      Int
-  attendance Attendance[]
-  course     Course      @relation(fields: [courseId], references: [id])
+  attendance attendance[]
+  course     course       @relation(fields: [courseId], references: [id], map: "Lecture_courseId_fkey")
 
-  @@index([courseId])
+  @@index([courseId], map: "Lecture_courseId_fkey")
 }
 
-model Attendance {
-  id        Int      @id @default(autoincrement())
-  lectureId Int
-  studentId Int
-  attended  Boolean  @default(false)
-  date      DateTime
-  lecture   Lecture  @relation(fields: [lectureId], references: [id])
-  user      User     @relation(fields: [studentId], references: [id])
+model message {
+  id                            String   @id
+  content                       String
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime
+  senderId                      Int
+  receiverId                    Int
+  isRead                        Boolean  @default(false)
+  courseId                      Int?
+  course                        course?  @relation(fields: [courseId], references: [id], map: "Message_courseId_fkey")
+  user_message_receiverIdTouser user     @relation("message_receiverIdTouser", fields: [receiverId], references: [id], map: "Message_receiverId_fkey")
+  user_message_senderIdTouser   user     @relation("message_senderIdTouser", fields: [senderId], references: [id], map: "Message_senderId_fkey")
 
-  @@index([lectureId])
-  @@index([studentId])
+  @@index([courseId], map: "Message_courseId_idx")
+  @@index([receiverId], map: "Message_receiverId_idx")
+  @@index([senderId], map: "Message_senderId_idx")
 }
 
-model ActivityLog {
-  id        Int      @id @default(autoincrement())
-  studentId Int
-  action    String
-  timestamp DateTime @default(now())
-  courseId  Int?
-  user      User    @relation(fields: [studentId], references: [id])
+model submission {
+  id           Int               @id @default(autoincrement())
+  assignmentId Int
+  userId       Int
+  submittedAt  DateTime          @default(now())
+  score        Int?
+  feedback     String?
+  status       submission_status @default(SUBMITTED)
+  assignment   assignment        @relation(fields: [assignmentId], references: [id], map: "Submission_assignmentId_fkey")
+  user         user              @relation(fields: [userId], references: [id], map: "Submission_userId_fkey")
 
-  @@index([studentId])
+  @@index([assignmentId], map: "Submission_assignmentId_fkey")
+  @@index([userId], map: "Submission_userId_fkey")
 }
 
-enum Role {
+model user {
+  id                               Int           @id @default(autoincrement())
+  firstName                        String
+  lastName                         String
+  email                            String        @unique(map: "User_email_key")
+  role                             user_role
+  password                         String
+  progress                         Json?
+  timeSpent                        Json?
+  completionPercentage             Float?
+  activitylog                      activitylog[]
+  attendance                       attendance[]
+  course                           course[]
+  enrollment                       enrollment[]
+  message_message_receiverIdTouser message[]     @relation("message_receiverIdTouser")
+  message_message_senderIdTouser   message[]     @relation("message_senderIdTouser")
+  submission                       submission[]
+}
+
+enum enrollment_status {
+  ACTIVE
+  COMPLETED
+}
+
+enum user_role {
   STUDENT
   LECTURER
   ADMIN
 }
 
-enum EnrollmentStatus {
-  ACTIVE
-  COMPLETED
-}
-
-enum SubmissionStatus {
+enum submission_status {
   SUBMITTED
   GRADED
   LATE

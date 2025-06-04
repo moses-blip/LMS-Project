@@ -1,285 +1,314 @@
 .panelContainer {
-    padding: 2rem;
-    font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9;
-  }
-  
-  .heading {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: #1a1a1a;
-  }
-  
-  .topCards {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-  
-  .card {
-    flex: 1;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    padding: 1.5rem;
-    min-width: 300px;
-  }
-  
-  .cardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .viewListBtn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    cursor: pointer;
-  }
-  
-  .progressBarContainer {
-    display: flex;
-    height: 28px;
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 0.5rem;
-  }
-  
-  .progressSegment {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 0.8rem;
-    height: 100%;
-    transition: width 0.3s ease-in-out;
-  }
-  
-  .pieChart {
-    width: 150px;
-    height: 150px;
-    transform: rotate(-90deg);
-    border-radius: 6px;
-    overflow: hidden;
-    margin: 0.8rem 0;
-  }
-  
-  .segment {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.75rem;
-    color: #fff;
-    height: 100%;
-  }
-  
-  .legend {
-    display: flex;
-    gap: 1.2rem;
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-  }
-  
-  .notStarted {
-    color: #ede103;
-  }
-  
-  .inProgress {
-    color: #011252;
-  }
-  
-  .completed {
-    color: #ffc233;
-  }
-  
-  .dropdown {
-    margin-bottom: 0.6rem;
-  }
-  
-  .dropdown button {
-    padding: 0.4rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background: #f1f1f1;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-  
-  .cardFull {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    padding: 1.5rem;
-    margin-top: 1rem;
-  }
-  
-  .cardFull h3 {
-    margin-bottom: 1rem;
-  }
-  
-  .actionList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .actionList li {
-    cursor: pointer;
-    padding: 12px 16px;
-    font-size: 0.95rem;
-    border-radius: 10px;
-    transition: background-color 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #333;
-  }
-  
-  .actionList li:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .progressGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .progressBarWrapper {
-    position: relative;
-    background-color: #f1f1f1;
-    height: 20px;
-    border-radius: 999px;
-    overflow: hidden;
-  }
-  
-  .progressBar {
-    height: 100%;
-    border-radius: 999px;
-  }
-  
-  .progressBadge {
-    position: absolute;
-    right: 10px;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  
-  .selectCourseBtn {
-    margin-left: auto;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .pieChart {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    position: center;
-    background: conic-gradient(
-      #ffc233 0% 40%,       /* Completed */
-      #0091f8 40% 75%,      /* In Progress */
-      #ddd 75% 100%      /* Not Started */
-    );
-    margin: 1rem auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .pieChart::after {
-    content: "";
-    position: center;
-    top: 15%;
-    left: 15%;
-    width: 70%;
-    height: 70%;
-    background-color: #f9f9f9;
-    border-radius: 50%;
-    z-index: 1;
-  }
-  
-  .pieChartLabel {
-    position: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.9rem;
-    font-weight: 600;
-    z-index: 2;
-    color: #333;
-  }
-  
-  .infoCards {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 1rem;
-    margin: 1.5rem 0 2rem;
-    flex-wrap: wrap;
-  }
-  
-  .infoCard {
-    flex: 1;
-    min-width: 180px;
-    max-width: 220px;
-    background-color: #f5f7fa;
-    border: 1px solid #e1e4e8;
-    padding: 0.75rem;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    display: flex;
-    align-items: center;
-  }
-  
-  .icon {
-    margin-right: 0.75rem;
-    color: #007bff;
-  }
-  
-  .infoLabel {
-    font-size: 0.85rem;
-    color: #555;
-    margin: 0;
-  }
-  
-  .infoValue {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0;
-    color: #222;
-  }
-  /* === Recent Activity === */
+  padding: 2rem;
+  font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.heading {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #1a1a1a;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.topCards {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.card {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem 1.75rem;
+  min-width: 300px;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.viewListBtn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.viewListBtn:hover,
+.viewListBtn:focus {
+  background-color: #0056b3;
+  outline: none;
+}
+
+.progressBarContainer {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progressSegment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.8rem;
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+
+.pieChart {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 1rem auto;
+  border-radius: 50%;
+  background: conic-gradient(
+    #ffc233 0% 40%,       /* Completed */
+    #0091f8 40% 75%,      /* In Progress */
+    #ddd 75% 100%         /* Not Started */
+  );
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pieChart::after {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  background-color: #f9f9f9;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.pieChartLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 2;
+  color: #333;
+}
+
+.legend {
+  display: flex;
+  gap: 1.2rem;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.notStarted {
+  color: #bbb; /* Darker grey for better contrast */
+}
+
+.inProgress {
+  color: #0091f8;
+}
+
+.completed {
+  color: #ffc233;
+}
+
+.dropdown {
+  margin-bottom: 0.6rem;
+}
+
+.dropdown button {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f1f1f1;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown button:hover,
+.dropdown button:focus {
+  background-color: #e0e0e0;
+  outline: none;
+}
+
+.cardFull {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem 1.75rem;
+  margin-top: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.cardFull:hover {
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+}
+
+.cardFull h3 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.actionList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.actionList li {
+  cursor: pointer;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #333;
+}
+
+.actionList li:hover,
+.actionList li:focus {
+  background-color: #e6f0ff;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.15);
+  outline: none;
+}
+
+.progressGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.progressBarWrapper {
+  position: relative;
+  background-color: #f1f1f1;
+  height: 20px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.progressBadge {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #ffffff;
+  color: #333;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  font-size: 0.8rem;
+}
+
+.selectCourseBtn {
+  margin-left: auto;
+  padding: 6px 14px;
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+.selectCourseBtn:hover,
+.selectCourseBtn:focus {
+  background-color: #007bff;
+  outline: none;
+}
+
+.infoCards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+  flex-wrap: wrap;
+}
+
+.infoCard {
+  flex: 1;
+  min-width: 180px;
+  max-width: 240px;
+  background-color: #f5f7fa;
+  border: 1px solid #e1e4e8;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.infoCard:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.icon {
+  margin-right: 0.75rem;
+  color: #007bff;
+  font-size: 24px;
+}
+
+.infoLabel {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+.infoValue {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: #222;
+}
+
+/* === Recent Activity === */
 .recentActivity {
   background-color: #ffffff;
   border: 1px solid #e6e6e6;
   border-radius: 10px;
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
   margin-top: 1rem;
 }
 
 .recentActivity h4 {
-  margin-bottom: 0.75rem;
-  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #333;
 }
@@ -288,12 +317,13 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #555;
+  line-height: 1.5;
 }
 
 .recentActivity li {
-  padding: 0.4rem 0;
+  padding: 0.6rem 0;
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -306,15 +336,15 @@
   background-color: #fefefe;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
-  padding: 1.2rem 1.5rem;
+  padding: 1.5rem 1.75rem;
   margin-top: 1.5rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #444;
   line-height: 1.6;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.03);
 }
 
-/* === Responsive Adjustments (optional but clean) === */
+/* === Responsive Adjustments === */
 @media (max-width: 768px) {
   .topCards, .infoCards {
     flex-direction: column;
@@ -328,23 +358,4 @@
     flex-direction: column;
     gap: 0.5rem;
   }
-}
-
-/* === Badge Enhancements === */
-.progressBadge {
-  background-color: #ffffff;
-  color: #333;
-  font-weight: 500;
-  padding: 2px 10px;
-  border-radius: 20px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  font-size: 0.75rem;
-}
-
-/* === Extra polish: Soft hover on cards (optional) === */
-.card:hover,
-.cardFull:hover,
-.infoCard:hover {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  transition: box-shadow 0.3s ease;
 }

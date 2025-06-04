@@ -47,7 +47,7 @@ router.get('/', authenticate, async (req, res) => {
         // Get all active enrollments for the student
         const enrollments = await prisma.enrollment.findMany({
           where: {
-            studentId: userId,
+            userId: userId,
             status: 'ACTIVE'
           },
           include: {
@@ -57,7 +57,7 @@ router.get('/', authenticate, async (req, res) => {
                   include: {
                     submission: {
                       where: {
-                        studentId: userId
+                        userId: userId
                       }
                     }
                   }
@@ -66,7 +66,7 @@ router.get('/', authenticate, async (req, res) => {
                   include: {
                     attendance: {
                       where: {
-                        studentId: userId
+                        userId: userId
                       }
                     }
                   }
@@ -80,17 +80,17 @@ router.get('/', authenticate, async (req, res) => {
         const courseStats = enrollments.map(enrollment => {
           const course = enrollment.course;
           const totalAssignments = course.assignment.length;
-          const completedAssignments = course.assignment.filter(a => 
+          const completedAssignments = course.assignment.filter(a =>
             a.submission.some(s => s.studentId === userId)
           ).length;
           const totalLectures = course.lecture.length;
-          const attendedLectures = course.lecture.filter(l => 
+          const attendedLectures = course.lecture.filter(l =>
             l.attendance.some(a => a.studentId === userId && a.attended)
           ).length;
 
           const progress = Math.round(
-            ((completedAssignments / (totalAssignments || 1)) * 0.6 + 
-             (attendedLectures / (totalLectures || 1)) * 0.4) * 100
+            ((completedAssignments / (totalAssignments || 1)) * 0.6 +
+              (attendedLectures / (totalLectures || 1)) * 0.4) * 100
           );
 
           return {
@@ -103,7 +103,7 @@ router.get('/', authenticate, async (req, res) => {
             totalLectures,
             attendedLectures,
             nextAssignment: course.assignment
-              .filter(a => !a.submission.some(s => s.studentId === userId))[0]
+              .filter(a => !a.submission.some(s => s.studentId === userId))[0] || null
           };
         });
 
@@ -120,33 +120,17 @@ router.get('/', authenticate, async (req, res) => {
         break;
 
       case 'LECTURER':
-        // Fetch courses taught by lecturer
         const courses = await prisma.course.findMany({
-          where: {
-            lecturerId: userId
-          },
+          where: { lecturerId: userId },
           include: {
-            enrollment: {
-              include: {
-                user: true
-              }
-            },
-            assignment: {
-              include: {
-                submission: true
-              }
-            },
-            lecture: {
-              include: {
-                attendance: true
-              }
-            }
+            enrollment: { include: { user: true } },
+            assignment: { include: { submission: true } },
+            lecture: { include: { attendance: true } }
           }
         });
 
-        // Calculate dashboard metrics
         const unitsInstructing = courses.length;
-        const studentsInstructing = new Set(courses.flatMap(c => 
+        const studentsInstructing = new Set(courses.flatMap(c =>
           c.enrollment.map(e => e.user.id)
         )).size;
 
@@ -156,7 +140,6 @@ router.get('/', authenticate, async (req, res) => {
           ), 0
         );
 
-        // Process course reports
         const courseReport = {};
         for (const course of courses) {
           const totalStudents = course.enrollment.length;
@@ -170,43 +153,41 @@ router.get('/', authenticate, async (req, res) => {
             inProgress,
             completed,
             averageTimeSpent: '2 hours',
-            engagement: totalStudents > 0 ? `${Math.round((inProgress + completed) / totalStudents * 100)}%` : '0%',
+            engagement: totalStudents > 0
+              ? `${Math.round((inProgress + completed) / totalStudents * 100)}%`
+              : '0%',
             mostSkippedModule: 'Module 1'
           };
         }
 
-        // Calculate student progress metrics
         const allStudents = courses.flatMap(c => c.enrollment.map(e => e.user));
         const uniqueStudents = Array.from(new Set(allStudents.map(s => s.id)))
           .map(id => allStudents.find(s => s.id === id));
 
-        // Calculate average completion
         const averageCompletion = uniqueStudents.length > 0
           ? Math.round(uniqueStudents.reduce((sum, student) => {
-              const studentEnrollments = courses.flatMap(c => 
-                c.enrollment.filter(e => e.user.id === student.id)
-              );
-              const completedCount = studentEnrollments.filter(e => e.status === 'COMPLETED').length;
-              return sum + (completedCount / Math.max(1, studentEnrollments.length) * 100);
-            }, 0) / uniqueStudents.length)
+            const studentEnrollments = courses.flatMap(c =>
+              c.enrollment.filter(e => e.user.id === student.id)
+            );
+            const completedCount = studentEnrollments.filter(e => e.status === 'COMPLETED').length;
+            return sum + (completedCount / Math.max(1, studentEnrollments.length) * 100);
+          }, 0) / uniqueStudents.length)
           : 0;
 
-        // Find top performer
         const topPerformer = uniqueStudents.reduce((top, student) => {
-          const studentEnrollments = courses.flatMap(c => 
+          const studentEnrollments = courses.flatMap(c =>
             c.enrollment.filter(e => e.user.id === student.id)
           );
           const completedCount = studentEnrollments.filter(e => e.status === 'COMPLETED').length;
           const progress = (completedCount / Math.max(1, studentEnrollments.length)) * 100;
-          
+
           return (!top || progress > top.progress)
             ? { name: `${student.firstName} ${student.lastName}`, progress }
             : top;
         }, null) || { name: 'No students yet', progress: 0 };
 
-        // Count at-risk students (below 50% progress)
         const atRiskCount = uniqueStudents.filter(student => {
-          const studentEnrollments = courses.flatMap(c => 
+          const studentEnrollments = courses.flatMap(c =>
             c.enrollment.filter(e => e.user.id === student.id)
           );
           const completedCount = studentEnrollments.filter(e => e.status === 'COMPLETED').length;
@@ -214,19 +195,12 @@ router.get('/', authenticate, async (req, res) => {
           return progress < 50;
         }).length;
 
-        // Get recent activities
-        const recentActivities = await prisma.activityLog.findMany({
+        const recentActivities = await prisma.activitylog.findMany({
           where: {
-            courseId: {
-              in: courses.map(c => c.id)
-            }
+            courseId: { in: courses.map(c => c.id) }
           },
-          include: {
-            user: true
-          },
-          orderBy: {
-            timestamp: 'desc'
-          },
+          include: { user: true },
+          orderBy: { timestamp: 'desc' },
           take: 5
         });
 
@@ -254,66 +228,65 @@ router.get('/', authenticate, async (req, res) => {
         break;
 
       case 'ADMIN':
-        // Fetch all students and their progress
-        const students = await prisma.user.findMany({
-          where: { role: 'STUDENT' },
-          include: {
-            enrollment: {
-              include: {
-                course: {
-                  include: {
-                    assignment: true
-                  }
-                }
-              }
-            },
-            submission: true
-          }
-        });
-
-        const studentProgress = students.map(student => {
-          const completedAssignments = student.submission.length;
-          const totalAssignments = student.enrollment.reduce((sum, enrollment) =>
-            sum + enrollment.course.assignment.length, 0
-          );
-          const progress = totalAssignments > 0
-            ? Math.round((completedAssignments / totalAssignments) * 100)
-            : 0;
-
-          return {
-            name: `${student.firstName} ${student.lastName}`,
-            progress,
-            color: progress > 80 ? 'navy' : progress > 60 ? 'blue' : 'yellow'
-          };
-        });
-
-        // Calculate admin working hours (from activity logs)
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        
-        const adminLogs = await prisma.activityLog.count({
-          where: {
-            studentId: userId,
-            timestamp: {
-              gte: today
+  // Fetch all students and their progress
+  const students = await prisma.user.findMany({
+    where: { role: 'STUDENT' },
+    include: {
+      enrollment: {
+        include: {
+          course: {
+            include: {
+              assignment: true
             }
           }
-        });
+        }
+      },
+      submission: true
+    }
+  });
 
-        const adminWorkingHours = {
-          targetHours: 8,
-          completedHours: Math.min(8, Math.round(adminLogs / 10)), // Assuming each activity takes ~6 minutes
-          percentage: Math.min(100, Math.round((adminLogs / 80) * 100)) // 80 activities = 8 hours
-        };
+  const studentProgress = students.map(student => {
+    const completedAssignments = student.submission.length;
+    const totalAssignments = student.enrollment.reduce((sum, enrollment) =>
+      sum + enrollment.course.assignment.length, 0
+    );
+    const progress = totalAssignments > 0
+      ? Math.round((completedAssignments / totalAssignments) * 100)
+      : 0;
 
-        dashboardData = {
-          studentProgress,
-          adminWorkingHours
-        };
-        break;
+    return {
+      name: `${student.firstName} ${student.lastName}`,
+      progress,
+      color: progress > 80 ? 'navy' : progress > 60 ? 'blue' : 'yellow'
+    };
+  });
 
-      default:
-        return res.status(403).json({ message: 'Invalid user role' });
+  // Calculate admin working hours (from activity logs)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Use correct model name and correct userId field
+  const adminLogs = await prisma.activitylog.count({
+    where: {
+      userId: userId, // not studentId, check your schema
+      timestamp: {
+        gte: today
+      }
+    }
+  });
+
+  const adminWorkingHours = {
+    targetHours: 8,
+    completedHours: Math.min(8, Math.round(adminLogs / 10)), // Each activity ~6 minutes
+    percentage: Math.min(100, Math.round((adminLogs / 80) * 100))
+  };
+
+  dashboardData = {
+    studentProgress,
+    adminWorkingHours
+  };
+  break;
+
     }
 
     res.json(dashboardData);
@@ -323,4 +296,4 @@ router.get('/', authenticate, async (req, res) => {
   }
 });
 
-export default router; 
+export default router;
